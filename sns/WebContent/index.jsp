@@ -261,11 +261,24 @@ img {
 			$(".commentList").show();
 		});
 
-		function chkVal(event) {
-			console.log(event);
-		}
+		$(".chkBox").change(function(){
+			console.log("check");
+			
+			$(this).val("aaa");
+			
+		})
+		
+	
+		
 
+		
 	})
+	
+	
+/* 		function chkVal(event) {
+			console.log(event);
+		} */
+		
 </script>
 </head>
 <body>
@@ -307,9 +320,8 @@ img {
 		<div class="adminArea">
 			<div class="permission">Admin</div>
 			<div class="chkView">
-				<input type="checkbox" data-toggle="toggle" class="chkBox"
-					onclick="chkVal(event);"> <input type="hidden" value=""
-					name="boardSeq" />
+				<input type="checkbox" data-toggle="toggle" class="chkBox" id="hi" value="yes">
+				 <input type="hidden" value=""		name="boardSeq" />
 			</div>
 			<div class="blind">
 				<button class="btn btn-warning">Blind</button>
