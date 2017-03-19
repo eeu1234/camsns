@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.example.practice" />
+	<context:component-scan base-package="com.spring.camsns" />
 	
 	
 	
