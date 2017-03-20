@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snsboard">
+
+   
+
+   <select id ="boardList" resultType="com.spring.camsns.dto.SnsboardDTO">
+    SELECT SNSBOARD_SEQ AS snsboardSeq, SNSBOARD_SUBJECT AS snsboardSubject, SNSBOARD_CONTENT AS snsboardContent, SNSBOARD_REGDATE AS snsboardRegdate, SNSBOARD_BLIND AS snsboardBlind, SNSBOARD_STAT AS snsboardStat, USER_EMAIL_ID_FK AS userEmailIdFk , CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD ORDER BY SNSBOARD_SEQ DESC LIMIT 0 ,5;   </select>
+   
+   
+   
+</mapper>
+
+
+
+
+
+
+
+
