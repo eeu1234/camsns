@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.camsns.dao.CategoryDAO;
 import com.spring.camsns.dao.SnsboardDAO;
+import com.spring.camsns.dao.UniversityDAO;
 import com.spring.camsns.dto.CategoryDTO;
 import com.spring.camsns.dto.SnsboardCategoryDTO;
 import com.spring.camsns.dto.SnsboardDTO;
+import com.spring.camsns.dto.UniversityDTO;
 
 @Controller("SnsboardController")
 public class SnsboardController {
@@ -24,14 +26,21 @@ public class SnsboardController {
 	
 	@Autowired
 	private CategoryDAO categoryDao;
+	
+	@Autowired
+	private UniversityDAO universityDao;
 
 	
 	//메인페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main(HttpServletRequest request, HttpServletResponse response) {
 		List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList();
-
+		
+		//메인페이지라 요청 시 top에 학교리스트도 불러온다.
+		List<UniversityDTO> universityDtoList = universityDao.list();
+		
 		request.setAttribute("boardDtoList", boardDtoList);
+		request.setAttribute("universityDtoList", universityDtoList);
 
 		return "main";
 	}
