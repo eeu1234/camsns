@@ -6,7 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.spring.camsns.dto.SnsboardDTO;
+import com.spring.camsns.dto.SnsboardCategoryDTO;
 
 @Repository
 public class SnsboardDAO {
@@ -15,7 +15,7 @@ public class SnsboardDAO {
 	SqlSessionTemplate sql;
 	
 	
-	public List<SnsboardDTO> boardList(){
+	public List<SnsboardCategoryDTO> boardList(){
 		
 		return sql.selectList("boardList");
 	} 

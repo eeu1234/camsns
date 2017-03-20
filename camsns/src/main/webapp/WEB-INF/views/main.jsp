@@ -71,9 +71,33 @@ body {
 	margin: 0 auto;
 	border: 5px solid #F06161;
 	border-radius: 10px 10px 0 0;
-	background-color: #F06161;
 	color: white;
 }
+.backBlue{
+	background-color: #F06161;
+	border-color: #F06161;
+}
+.backRed{
+	background-color: #D9534F;
+	border-color: #D9534F;
+}
+.backYellow{
+	background-color: #F0AD4E;
+	border-color: #F0AD4E;
+}
+.backGreen{
+	background-color: #5CB85C;
+	border-color: #5CB85C;
+}
+.backSkyBlue{
+	background-color: #5BC0DE;
+	border-color: #5BC0DE;
+}
+
+
+
+
+
 
 .permission {
 	float: left;
@@ -101,8 +125,8 @@ body {
 	height: auto;
 	min-height: 300px;
 	background-color: #D5D5D5;
-	border-top: 2px solid #428bca;
-	border-radius: 4px;
+	
+	
 	margin: 0 auto;
 	margin-bottom: 10px;
 }
@@ -111,8 +135,8 @@ body {
 	position: relative;
 	width: 100%;
 	height: 35px;
-	background-color: #428bca;
 	color:white;
+	border-radius: 4px;
 }
 
 .contentNum {
@@ -151,7 +175,6 @@ body {
 	height: 90%;
 	color: white;
 	border: 0px;
-	background-color: #428bca;
 }
 
 .content {
@@ -269,6 +292,10 @@ img {
 	width: 100%;
 	height: auto;
 }
+
+.b1 { background-color: red; }
+.b2 { background-color: yellow; }
+.b3 { background-color: blue; }
 </style>
 <script>
 	$(function() {
@@ -327,8 +354,7 @@ img {
 	</div>
 	<div id="subMenu">
 		<button type="button" id="newBoardBtn" class="btn btn-primary">글쓰기</button>
-		<input type="text" id="searchBox" class="form-control"
-			placeholder="검색">
+		<input type="text" id="searchBox" class="form-control" placeholder="검색">
 	</div>
 	<div id="container">
 		<!-- 공지사항 -->
@@ -344,11 +370,14 @@ img {
 			<div class="contentArea">
 
 				<!-- 머리부분 -->
-				<div class="contentHeader">
+				<div class="contentHeader ${boardDtoList.categoryStat} }">
 					<div class="contentNum">#${boardDtoList.snsboardSeq}</div>
-					<div class="title">${boardDtoList.snsboardSubject}</div>
+					<div class="title">
+					${boardDtoList.snsboardSubject}
+					</div>
+					
 					<div class="shareArea">
-						<button class="shareBtn glyphicon glyphicon-share-alt">
+						<button class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryStat} >
 							<!-- 이미지넣기 -->
 						</button>
 					</div>
@@ -371,7 +400,7 @@ img {
 				<div class="comment">
 					<div class="addComment">
 						<input type="text" class="commentText form-control" />
-						<button class="glyphicon glyphicon-camera picUpBtn"></button>
+						<inpu type="file" class="glyphicon glyphicon-camera picUpBtn"/>
 					</div>
 					<div class="commentList">
 						<div class="glyphicon glyphicon-user commProfile"></div>

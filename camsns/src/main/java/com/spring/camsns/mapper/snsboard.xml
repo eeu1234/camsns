@@ -6,8 +6,8 @@
 
    
 
-   <select id ="boardList" resultType="com.spring.camsns.dto.SnsboardDTO">
-    SELECT SNSBOARD_SEQ AS snsboardSeq, SNSBOARD_SUBJECT AS snsboardSubject, SNSBOARD_CONTENT AS snsboardContent, SNSBOARD_REGDATE AS snsboardRegdate, SNSBOARD_BLIND AS snsboardBlind, SNSBOARD_STAT AS snsboardStat, USER_EMAIL_ID_FK AS userEmailIdFk , CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD ORDER BY SNSBOARD_SEQ DESC LIMIT 0 ,5;   </select>
+   <select id ="boardList" resultType="com.spring.camsns.dto.SnsboardCategoryDTO">
+    SELECT A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , B.CATEGORY_NAME AS categoryName,B.CATEGORY_STAT AS categoryStat FROM SNSBOARD A INNER JOIN CATEGORY B WHERE A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ ORDER BY SNSBOARD_SEQ DESC LIMIT 0 ,5; </select>
    
    
    

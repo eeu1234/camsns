@@ -27,6 +27,7 @@ public class HomeController {
 	public String home(HttpServletRequest request,HttpServletResponse response) {
 		
 		int temp = dao.m1();
+		dao.test();
 		List<HomeDTO> list = dao.m2();
 		System.out.println(temp);
 		

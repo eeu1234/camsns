@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.camsns.dao.SnsboardDAO;
-import com.spring.camsns.dto.SnsboardDTO;
+import com.spring.camsns.dto.SnsboardCategoryDTO;
 
 @Controller("SnsboardController")
 public class SnsboardController {
@@ -22,7 +22,7 @@ public class SnsboardController {
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main(HttpServletRequest request,HttpServletResponse response) {
 		
-		List<SnsboardDTO> boardDtoList = dao.boardList();
+		List<SnsboardCategoryDTO> boardDtoList = dao.boardList();
 		
 		request.setAttribute("boardDtoList", boardDtoList);
 		
