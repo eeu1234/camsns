@@ -296,8 +296,11 @@ img {
 }
 </style>
 <script>
-	var index = 0;
 	$(function() {
+	
+		
+		
+		
 		
 		
 		
@@ -318,71 +321,13 @@ img {
 			$('#chk').prop('checked', true);
 
 		})
-		
-		
-		
-		/* 카카오톡 글 url 보내기 */
-		$(".shareBtn").click(function(){
-			var boardSeq = $(this).val();
-			var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq=" + boardSeq;
-			console.log(shareUrl);
-		})
-		
-		
-		viewLoop();
-		
-		
-		
-		
-		
-	})//onload
-	
-	
-	
-	function viewLoop(){
-
-		$(window).scroll(function() {
-			if ($(window).scrollTop() == $(document).height() - $(window).height()) { 
-				index += 5;
-				console.log(index);
-				$.ajax({
-					type : "GET",
-					url : "/camsns/main.action",
-					data : "index=" + index,
-					success : function(data) {
-						$("#middle").html("<option value='-1'>중분류를 선택하세요.</option>");
-						
-						
-						//jQuery XML 제어
-						//1. data : XMLDocument 객체
-						//2. find()  : 태그 검색
-						var list = $(data).find("item");
-						$(list).each(function(index,item){
-							var seq = $(item).find("seq").text();
-							var name = $(item).find("name").text();
-							console.log(name);
-							
-							$("#middle").append("<option value='"+seq+"'>"+name+"</option>");
-							
-						})
-					}
-
-				});//ajax
-				
-				
-				
-				
-			}
-		})//scoll 바닥
-		
-		
-	}
+	})
 </script>
 </head>
 <body>
 	<%@include file="/inc/top.jsp"%>
-	
-	
+
+
 	<div id="subMenu">
 		<a href="/camsns/snsboard/writeBoard.action" id="newBoardBtn"
 			class="btn btn-primary">글쓰기</a> <input type="text" id="searchBox"
@@ -397,78 +342,78 @@ img {
 
 
 		<!-- 본문 글 쿼리 -->
-		<c:forEach items="${boardDtoList}" var="boardDtoList">
 
-			<div class="contentArea">
 
-				<!-- 머리부분 -->
-				<div class="contentHeader ${boardDtoList.categoryType} }">
-					<div class="contentNum">#${boardDtoList.snsboardSeq}</div>
-					<div class="title">${boardDtoList.snsboardSubject}</div>
+		<div class="contentArea">
 
-					<div class="shareArea">
-						<button value="${boardDtoList.snsboardSeq}"
-							class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryType}">
-							
-						</button>
-					</div>
+			<!-- 머리부분 -->
+			<div class="contentHeader ${boardDto.categoryType}">
+				<div class="contentNum">#${boardDto.snsboardSeq}</div>
+				<div class="title">${boardDto.snsboardSubject}</div>
 
-					<div class="clear"></div>
+				<div class="shareArea">
+					<button
+						class="shareBtn glyphicon glyphicon-share-alt ${boardDto.categoryType}">
+						<!-- 이미지넣기 -->
+					</button>
 				</div>
 
+				<div class="clear"></div>
+			</div>
 
-				<div class="content">
-					<div class="contentRegdate">${boardDtoList.snsboardRegdate}</div>
-					<div class="contentPic">
-						<!-- <img src="./images/ad1.JPG" /> -->
-						<!-- 이미지있으면 띄우기 -->
-					</div>
 
-					${boardDtoList.snsboardContent}
-
+			<div class="content">
+				<div class="contentRegdate">${boardDto.snsboardRegdate}</div>
+				<div class="contentPic">
+					<!-- <img src="./images/ad1.JPG" /> -->
+					<!-- 이미지있으면 띄우기 -->
 				</div>
 
-				<div class="comment">
-					<div class="addComment">
-						<input type="text" class="commentText form-control" />
-						<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->
-						
-						<div class="picUpBtn">
-						<label for="ex_file" class="glyphicon glyphicon-camera"> </label>
-						  <input type="file" id="ex_file"> 
-						  </div>
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user commProfile"></div>
-						<div class="commTxt">안녕</div>
-						<div class="commDate">2017-03-15 12:00:25</div>
-
-
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕 나느 방그루 까꿍
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕하세요 댓글2입니다.
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕
-
-					</div>
-
-					<button class="showComment" id="showBtn1">댓글 28개</button>
-				</div>
+				${boardDto.snsboardContent}
 
 			</div>
 
-		</c:forEach>
+			<div class="comment">
+				<div class="addComment">
+					<input type="text" class="commentText form-control" />
+					<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->
+
+					<div class="picUpBtn">
+						<label for="ex_file" class="glyphicon glyphicon-camera"> </label>
+						<input type="file" id="ex_file">
+					</div>
+
+				</div>
+				<div class="commentList">
+					<div class="glyphicon glyphicon-user commProfile"></div>
+					<div class="commTxt">안녕</div>
+					<div class="commDate">2017-03-15 12:00:25</div>
+
+
+
+				</div>
+				<div class="commentList">
+					<div class="glyphicon glyphicon-user"></div>
+					안녕 나느 방그루 까꿍
+
+				</div>
+				<div class="commentList">
+					<div class="glyphicon glyphicon-user"></div>
+					안녕하세요 댓글2입니다.
+
+				</div>
+				<div class="commentList">
+					<div class="glyphicon glyphicon-user"></div>
+					안녕
+
+				</div>
+
+				<button class="showComment" id="showBtn1">댓글 28개</button>
+			</div>
+
+		</div>
+
+
 
 	</div>
 

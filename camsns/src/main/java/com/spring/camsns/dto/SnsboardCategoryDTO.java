@@ -9,7 +9,7 @@ public class SnsboardCategoryDTO {
 	private String snsboardStat;
 	private String userEmailIdFk;
 	private String categoryName;
-	private String categoryStat;
+	private String categoryType;
 	
 	
 	public String getSnsboardSeq() {
@@ -60,10 +60,11 @@ public class SnsboardCategoryDTO {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public String getCategoryStat() {
-		return categoryStat;
+	public String getCategoryType() {
+		return categoryType;
 	}
-	public void setCategoryStat(String categoryStat) {
-		this.categoryStat = categoryStat;
+	public void setCategoryType(String categoryType) {
+		this.categoryType = categoryType;
 	}
+
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snsboard">
+
+   
+
+   <select id ="categoryList" resultType="com.spring.camsns.dto.CategoryDTO">
+    SELECT CATEGORY_SEQ AS categorySeq,CATEGORY_NAME AS categoryName FROM CATEGORY WHERE CATEGORY_STAT = 'y' ORDER BY CATEGORY_SEQ DESC
+   </select>
+   
+   
+</mapper>
+
+
+
+
+
+
+
+

@@ -3,7 +3,7 @@ package com.spring.camsns.dto;
 public class CategoryDTO {
 	private String categorySeq;
 	private String categoryName;
-	private String categoryStatr;
+	private String categoryStat;
 	public String getCategorySeq() {
 		return categorySeq;
 	}
@@ -16,11 +16,12 @@ public class CategoryDTO {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	public String getCategoryStatr() {
-		return categoryStatr;
+	public String getCategoryStat() {
+		return categoryStat;
 	}
-	public void setCategoryStatr(String categoryStatr) {
-		this.categoryStatr = categoryStatr;
+	public void setCategoryStat(String categoryStat) {
+		this.categoryStat = categoryStat;
 	}
+
 	
 }
