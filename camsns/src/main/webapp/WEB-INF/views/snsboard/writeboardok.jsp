@@ -16,7 +16,7 @@
 
 $(document).ready(function(){
 
-	<c:if test="${result==1}">
+	<c:if test="${result>0}">
 	alert("글쓰기 성공!!");
 	location.href ="/camsns/main.action";
 	</c:if>

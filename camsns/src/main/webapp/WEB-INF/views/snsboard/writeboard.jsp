@@ -99,7 +99,7 @@ table tr td:nth-child(1) {
 
 	<div id="container">
 		<!--제목,컨텐츠,아이디,카테고리  -->
-		<form action="/camsns/snsboard/writeBoardOk.action" method="POST">
+		<form action="/camsns/snsboard/writeBoardOk.action" method="POST"  enctype="multipart/form-data">
 			<table class="table table-striped">
 				
 				<tr>
@@ -132,7 +132,7 @@ table tr td:nth-child(1) {
 
 
 			<div class="filebox bs3-success">
-				<label for="ex_file2">사진 업로드</label> <input type="file" id="ex_file2" name="imgFile">
+				<label for="imgFileUpload">사진 업로드</label> <input type="file" id="imgFileUpload" name="imgFile">
 			</div>
 			<hr />
 			<div id="btnGroup">
