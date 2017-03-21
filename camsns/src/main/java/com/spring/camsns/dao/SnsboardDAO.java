@@ -1,5 +1,6 @@
 package com.spring.camsns.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,13 +16,20 @@ public class SnsboardDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	
-	public List<SnsboardCategoryDTO> boardList(){
+	//초기 로딩
+	public List<SnsboardCategoryDTO> boardList(String universitySeq){
 		
-		return sql.selectList("boardList");
+		return sql.selectList("boardList",universitySeq);
 	}
 
-	
+	//
+	public List<SnsboardCategoryDTO> moreView(String universitySeq,String index) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("universitySeq", universitySeq);
+		map.put("index", index);
+		// TODO Auto-generated method stub
+		return sql.selectList("moreView",map);
+	} 
 	
 	
 	
@@ -42,5 +50,11 @@ public class SnsboardDAO {
 	public SnsboardCategoryDTO boardOne(String boardSeq) {
 
 		return sql.selectOne("boardOne",boardSeq);
-	} 
+	}
+
+
+
+
+
+
 }
