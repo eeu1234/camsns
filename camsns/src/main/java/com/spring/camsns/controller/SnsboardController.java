@@ -1,6 +1,7 @@
 package com.spring.camsns.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -44,40 +45,65 @@ public class SnsboardController {
 
 	// 메인페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpServletResponse response) {
-
-		List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq);
-
+	public String main(HttpServletRequest request, HttpServletResponse response,String num) throws IOException {
+		if(num == null || num.equals("0")){//첫 로딩시
+		//총 게시물 수
+		int cntList = boardDao.countList(universitySeq);
+		
+		
+		num = "0";
+		List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num);
+		
 		// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
 		List<UniversityDTO> universityDtoList = universityDao.list();
-
+		
+		request.setAttribute("cntList", cntList);
 		request.setAttribute("boardDtoList", boardDtoList);
 		request.setAttribute("universityDtoList", universityDtoList);
-
+		
+		System.out.println(num);
+		
 		return "main";
+		
+		
+		
+		}else{//다음 로딩시
+			
+				
+				
+				
+				List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num);
+				//System.out.println(boardDtoList.size());
+
+				JSONArray list = new JSONArray();
+	
+				for (SnsboardCategoryDTO dto : boardDtoList) {
+					JSONObject obj = new JSONObject();
+					obj.put("boardSeq", dto.getSnsboardSeq());//글번호
+					obj.put("boardSubject", dto.getSnsboardSubject());//글제목
+					obj.put("boardContent", dto.getSnsboardContent());//글내용
+					obj.put("boardRegdate", dto.getSnsboardRegdate());//글등록날짜
+					obj.put("category",dto.getCategoryType());//카테고리 타입
+					
+					list.add(obj);
+	
+				}
+	
+					System.out.println(list.toJSONString());
+					response.setCharacterEncoding("utf-8");
+					response.getWriter().print(list);
+				
+			return null;
+			
+		}
+
 	}
 
 	// 글 더불러오기
 	@RequestMapping(value = "/moreView.action", method = RequestMethod.GET)
 	public void moreView(HttpServletRequest request, HttpServletResponse response, String index) throws Exception {
 
-		List<SnsboardCategoryDTO> boardDtoList = boardDao.moreView(universitySeq, index);
-		System.out.println(boardDtoList.size());
-
-		JSONArray list = new JSONArray();
-
-		for (SnsboardCategoryDTO dto : boardDtoList) {
-			JSONObject obj = new JSONObject();
-			obj.put("boardSeq", dto.getSnsboardSeq());
-			obj.put("boardSubject", dto.getSnsboardSubject());
-			obj.put("boardCategoryName", dto.getCategoryName());
-			list.add(obj);
-
-		}
-
-		System.out.println(list.toJSONString());
-		response.setCharacterEncoding("utf-8");
-		response.getWriter().print(list);
+		
 
 	}
 

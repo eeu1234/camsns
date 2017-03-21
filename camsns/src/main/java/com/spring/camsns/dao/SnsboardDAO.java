@@ -18,24 +18,27 @@ public class SnsboardDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	//초기 로딩
-	public List<SnsboardCategoryDTO> boardList(String universitySeq){
+	public int countList(String universitySeq){
 		
-		return sql.selectList("boardList",universitySeq);
+		return sql.selectOne("countList",universitySeq);
 	}
-
-	//
-	public List<SnsboardCategoryDTO> moreView(String universitySeq,String index) {
+	
+	
+	//글 로딩
+	public List<SnsboardCategoryDTO> boardList(String universitySeq,String index){
+		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("universitySeq", universitySeq);
 		map.put("index", index);
 		// TODO Auto-generated method stub
-		return sql.selectList("moreView",map);
-	} 
+		return sql.selectList("boardList",map);
+	}
+
+
 	
 	
 	
-	
+	//글 쓰기
 	public int writeBoard(SnsboardDTO boardDto, ArrayList<SnsboardfileDTO> fileList) {
 		int result=0;
 		

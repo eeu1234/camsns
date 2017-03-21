@@ -19,6 +19,8 @@ body {
 	width: 100%;
 	height: 100%;
 	max-width: 600px;
+	 overflow: auto; 
+	 -webkit-overflow-scrolling: touch;
 }
 
 #subMenu {
@@ -100,14 +102,19 @@ body {
 	width: 100%;
 }
 
-.contentArea {
+#contentArea {
 	position: relative;
 	width: 90%;
 	height: auto;
 	min-height: 300px;
-	background-color: #D5D5D5;
 	margin: 0 auto;
 	margin-bottom: 10px;
+	background-color: white;
+}
+.area{
+	background-color: #D5D5D5;
+	position: relative;
+	margin-bottom:20px;
 }
 
 .contentHeader {
@@ -116,6 +123,7 @@ body {
 	height: 35px;
 	color: white;
 	border-radius: 4px;
+	
 }
 
 .contentNum {
@@ -222,23 +230,6 @@ body {
 	height: 30px;
 }
 
-.commProfile {
-	float: left;
-	width: 15%;
-}
-
-.commTxt {
-	float: left;
-	width: 65%;
-}
-
-.commDate {
-	float: left;
-	width: 20%;
-	font-size: 2px;
-	text-align: right;
-	color: #888;
-}
 
 .commentList {
 	position: relative;
@@ -297,8 +288,17 @@ img {
 </style>
 <script>
 	var index = 0;
+	var windowWidth =0;
+	var windowHeight =0;
+	var cntList = 0;
+	var flag = false;
 	$(function() {
-
+			
+		
+		cntList = "${cntList}";
+		
+		
+		
 		$(".commentList").hide();
 
 		$("#showBtn1").click(function() {
@@ -318,53 +318,125 @@ img {
 		$(".shareBtn")
 				.click(
 						function() {
+							var url = "http://localhost:8090";
+							
 							var boardSeq = $(this).val();
 							var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="
 									+ boardSeq;
-							console.log(shareUrl);
+							
+							console.log(url+shareUrl);
 						})
 
-						
-						
+						//1289/1303/1343/1369/1358/1366
+						 var i=0;
 						
 		$(window).scroll(
+				
+		
+				
 				function() {
-					if ($(window).scrollTop() == $(document).height()
-							- $(window).height()) {
-						$.ajax({
-							type : "GET",
-							url : "/camsns/moreView.action",
-							contentType: "application/json; charset=utf-8",
-							data : "index=" + 5,
+					if ($(window).scrollTop() == ($(document).height() - $(window).height()) && flag == true) {
+						$("#loading").hide();
+						alert("마지막 글입니다.");
+						return;
+					}
+
+				
+					if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
+						
+						
+						if(flag == false){
+					
 							
-							success: function(data){
-								 var result =JSON.parse(data);
-								if (data.length != 0) {
-									$.each(result, function(intValue, currentElement) {
-										var colNameVAL = "";
-										var colSeqVAL = "";
-										$.each(currentElement, function(key, value) {
-											console.log(key);
-											console.log(value);
+						index +=5;
+						//console.log(index);						
+						
+							$.ajax({
+								type : "GET",
+								url : "/camsns/main.action",
+								dataType: "json",
+								data : "num=" + index,
+								
+								success: function(result){
+									
+									if (result.length != 0) {
+										$.each(result, function(intValue, currentElement) {
+											
+												//	console.log(key);
+												//console.log(value);
+												//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
+												//console.log(currentElement.boardCategoryName);
+												//console.log(currentElement.boardCategoryName);
+												var html ="";
+												
+												
+												html += '<div class="area">';
+												html += '<div class="contentHeader '+currentElement.category+'">';
+												html += '<div class="contentNum">#'+currentElement.boardSeq+'</div>';
+												html += '<div class="title">'+currentElement.boardSubject+'</div>';
+												html += '<div class="shareArea">';
+												html += '<button value="'+currentElement.boardSeq+'"';
+												html += 'class="shareBtn glyphicon glyphicon-share-alt '+currentElement.category+' ">';
+												html += '</button>';
+												html += '</div>';
+												html += '<div class="clear"></div>';
+												html += '</div>';
+												html += '<div class="content">';
+												html += '<div class="contentRegdate">'+currentElement.boardRegdate+' </div>';
+												html += '<div class="contentPic">';
+												html += '	<!-- <img src="./images/ad1.JPG" /> -->';
+												html += '												</div>';
+												html += currentElement.boardContent;
+												html += '</div>';
+												html += '<div class="comment">';
+												html += '<div class="addComment">';
+												html += '<input type="text" class="commentText form-control" />';
+												html += '<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->';
+												html += '<div class="picUpBtn">';
+												html += '<label for="ex_file" class="glyphicon glyphicon-camera">';
+												html += '</label> <input type="file" id="ex_file">';
+												html += '</div>';
+												html += '</div>';
+												html += '<button class="showComment" id="showBtn1">댓글 28개</button>';
+												html += '</div>';
+												html += '</div>';
+												html += '</div>';
+												
+						
+												$("#contentArea").append(html);
+											//	console.log($(document).height()); //동적으로 변경된다.
+											
+												 
+											
 											
 
 										});
+										
+									}//if(result!=0)
+										
+										
+										//다음 루프때  alert 띄움
+										if((cntList - index ) <= 0){
+											flag = true;
+											
+											
+										}
 									
-										
-										
-										
-									});
-
-								} 
-							}							,
-														
+								},//sucess
 							    error: function(xhr, textStatus, error) {
-							        alert('Error' + error);
+								        alert('Error' + error);
 							    }
-						});
-
+							
+								
+							});//ajax
+							
+						}
+					
+					
+						
 					};
-
+			
+					
 				});//scroll
 
 	})//onload
@@ -388,9 +460,9 @@ img {
 
 
 		<!-- 본문 글 쿼리 -->
+		<div id="contentArea">
 		<c:forEach items="${boardDtoList}" var="boardDtoList">
-
-			<div class="contentArea">
+			<div class="area">
 
 				<!-- 머리부분 -->
 				<div class="contentHeader ${boardDtoList.categoryType} }">
@@ -430,37 +502,17 @@ img {
 						</div>
 
 					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user commProfile"></div>
-						<div class="commTxt">안녕</div>
-						<div class="commDate">2017-03-15 12:00:25</div>
-
-
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕 나느 방그루 까꿍
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕하세요 댓글2입니다.
-
-					</div>
-					<div class="commentList">
-						<div class="glyphicon glyphicon-user"></div>
-						안녕
-
-					</div>
+					
 
 					<button class="showComment" id="showBtn1">댓글 28개</button>
 				</div>
 
-			</div>
-
+		</div>
 		</c:forEach>
-
+		</div>
+	</div>
+	<div id="loading" style="background-color:white;width:100%;height:50px;text-align:center;">
+		<img src="./images/loading.gif" style="width:10%;height:auto;" />
 	</div>
 
 
