@@ -103,6 +103,7 @@ body {
 }
 
 #contentArea {
+
 	position: relative;
 	width: 90%;
 	height: auto;
@@ -110,6 +111,7 @@ body {
 	margin: 0 auto;
 	margin-bottom: 10px;
 	background-color: white;
+	text-align:center;
 }
 .area{
 	background-color: #D5D5D5;
@@ -287,57 +289,68 @@ img {
 }
 </style>
 <script>
-	var index = 0;
-	var windowWidth =0;
-	var windowHeight =0;
-	var cntList = 0;
-	var flag = false;
+	var index = 0; //글 5개씩 넘기기 위한 변수
+	var cntList = "${cntList}";// 총 글 갯수
+	var flag = false;//마지막 글 이후 ajax 요청 안하기위한 flag
+	var alertFlag =false;//마지막글 alert 창 1번만띄우는 flag
+	
+	
 	$(function() {
-			
-		
-		cntList = "${cntList}";
+		if(cntList ==0){ $("#contentArea").html("글이 존재하지 않습니다.");}
 		
 		
+		/* 검색 */
+		$("#searchBox").keydown(function (key) {
+			 
+	        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+				//검색 index 초기화
+	        	index = 0;
+	        	//이전에 감춰뒀던 로딩이미지 보이기
+	        	$("#loading").show();
+	        	
+	        	
+		        var word = $(this).val();//검색어 가져옴
+		        $("#contentArea").html("");//기존 자료 초기화
+		        search(word);//ajax
+	        }
+	 
+	    });
+
+
 		
-		$(".commentList").hide();
+		
 
-		$("#showBtn1").click(function() {
-			$(".commentList").show();
-		});
 
-		function chkVal(event) {
-			console.log(event);
-		}
 
-		$(".chkBox").change(function() {
-			$('#chk').prop('checked', true);
-
-		})
 
 		/* 카카오톡 글 url 보내기 */
 		$(".shareBtn")
 				.click(
 						function() {
-							var url = "http://localhost:8090";
+							var name = $(this).attr('name');
 							
 							var boardSeq = $(this).val();
-							var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="
-									+ boardSeq;
+//							var hostUrl = "http://127.0.0.1:8090";
+							var hostUrl = "http://eeu1234.iptime.org:8090";
+							var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
+							var url = hostUrl +shareUrl
 							
-							console.log(url+shareUrl);
+							//함수실행
+							sendLink(url,name);
+							
 						})
 
-						//1289/1303/1343/1369/1358/1366
-						 var i=0;
-						
-		$(window).scroll(
 				
+		/* 스크롤시 글 더불러오기 */		
+		$(window).scroll(
 		
 				
 				function() {
-					if ($(window).scrollTop() == ($(document).height() - $(window).height()) && flag == true) {
+				
+					if ($(window).scrollTop() == ($(document).height() - $(window).height()) && flag == true && alertFlag == false) {
 						$("#loading").hide();
 						alert("마지막 글입니다.");
+						alertFlag = true;
 						return;
 					}
 
@@ -349,13 +362,13 @@ img {
 					
 							
 						index +=5;
-						//console.log(index);						
+						var word= $("#searchBox").val();
 						
 							$.ajax({
 								type : "GET",
 								url : "/camsns/main.action",
 								dataType: "json",
-								data : "num=" + index,
+								data : "num=" + index + "&word=" + word ,
 								
 								success: function(result){
 									
@@ -375,7 +388,7 @@ img {
 												html += '<div class="contentNum">#'+currentElement.boardSeq+'</div>';
 												html += '<div class="title">'+currentElement.boardSubject+'</div>';
 												html += '<div class="shareArea">';
-												html += '<button value="'+currentElement.boardSeq+'"';
+												html += '<button value="'+currentElement.boardSeq+'"'+'name="'+currentElement.boardSeq+'"';
 												html += 'class="shareBtn glyphicon glyphicon-share-alt '+currentElement.category+' ">';
 												html += '</button>';
 												html += '</div>';
@@ -440,6 +453,83 @@ img {
 				});//scroll
 
 	})//onload
+	
+	
+	function search(word){
+		$.ajax({
+			type : "GET",
+			url : "/camsns/main.action",
+			dataType: "json",
+			data : "word=" + word ,
+			
+			success: function(result){
+				
+				if (result.length != 0) {
+				
+					$.each(result, function(intValue, currentElement) {
+						
+							//console.log(intValue);
+							//console.log(currentElement);
+							//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
+							//console.log(currentElement.boardCategoryName);
+							//console.log(currentElement.boardCategoryName);
+							var html ="";
+							
+							
+							html += '<div class="area">';
+							html += '<div class="contentHeader '+currentElement.category+'">';
+							html += '<div class="contentNum">#'+currentElement.boardSeq+'</div>';
+							html += '<div class="title">'+currentElement.boardSubject+'</div>';
+							html += '<div class="shareArea">';
+							html += '<button value="'+currentElement.boardSeq+'"'+'name="'+currentElement.boardSeq+'"';
+							html += 'class="shareBtn glyphicon glyphicon-share-alt '+currentElement.category+' ">';
+							html += '</button>';
+							html += '</div>';
+							html += '<div class="clear"></div>';
+							html += '</div>';
+							html += '<div class="content">';
+							html += '<div class="contentRegdate">'+currentElement.boardRegdate+' </div>';
+							html += '<div class="contentPic">';
+							html += '	<!-- <img src="./images/ad1.JPG" /> -->';
+							html += '												</div>';
+							html += currentElement.boardContent;
+							html += '</div>';
+							html += '<div class="comment">';
+							html += '<div class="addComment">';
+							html += '<input type="text" class="commentText form-control" />';
+							html += '<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->';
+							html += '<div class="picUpBtn">';
+							html += '<label for="ex_file" class="glyphicon glyphicon-camera">';
+							html += '</label> <input type="file" id="ex_file">';
+							html += '</div>';
+							html += '</div>';
+							html += '<button class="showComment" id="showBtn1">댓글 28개</button>';
+							html += '</div>';
+							html += '</div>';
+							html += '</div>';
+							
+	
+							$("#contentArea").append(html);
+						
+							 
+						
+						
+
+					});
+					
+				}else{//if(result!=0)
+					$("#loading").hide();//값이없을경우
+					$("#contentArea").html("결과가 없습니다.");
+				}
+			},//sucess
+		    error: function(xhr, textStatus, error) {
+			        alert('Error' + error);
+		    }
+		
+			
+		});//ajax
+		
+	}
 </script>
 </head>
 <body>
@@ -470,7 +560,7 @@ img {
 					<div class="title">${boardDtoList.snsboardSubject}</div>
 
 					<div class="shareArea">
-						<button value="${boardDtoList.snsboardSeq}"
+						<button value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}"
 							class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryType}">
 
 						</button>
@@ -483,8 +573,9 @@ img {
 				<div class="content">
 					<div class="contentRegdate">${boardDtoList.snsboardRegdate}</div>
 					<div class="contentPic">
-						<!-- <img src="./images/ad1.JPG" /> -->
-						<!-- 이미지있으면 띄우기 -->
+
+
+						<img src="./images/ad1.JPG" /> 
 					</div>
 
 					${boardDtoList.snsboardContent}
@@ -515,6 +606,36 @@ img {
 		<img src="./images/loading.gif" style="width:10%;height:auto;" />
 	</div>
 
+
+
+
+<script type='text/javascript'>
+  //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('497e3896cc14549676d2ada05a95e0fd');
+	
+	
+	
+	
+
+	
+	  function sendLink(url,name) {
+      Kakao.Link.sendTalkLink({
+        label: '#'+name+'번째 이야기', // 공유할 메세지의 제목을 설정
+				 image: {
+        src: 'http://mud-kage.kakao.co.kr/14/dn/btqfJfuXWcY/P7iGH1pyo5w9X1pp8lf9Pk/o.jpg',
+        width: '50',
+        height: '50'
+      } // 이건 썸네일을 설정 하는 겁니다.
+				,
+      webButton: {
+        text: '글 보기',
+         url : url // 각각의 포스팅 본문의 링크를 거는 코드입니다. 
+      }
+      });
+    }
+  //]]>
+</script>
 
 </body>
 </html>

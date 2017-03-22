@@ -18,19 +18,24 @@ public class SnsboardDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	public int countList(String universitySeq){
-		
-		return sql.selectOne("countList",universitySeq);
+	public int countList(String universitySeq, String word){
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("universitySeq", universitySeq);
+		map.put("word", word);// ?번째 부터 ?번째 글
+		//System.out.println("행 갯수  :"+sql.selectOne("countList",map));
+		return sql.selectOne("countList",map);
 	}
 	
 	
 	//글 로딩
-	public List<SnsboardCategoryDTO> boardList(String universitySeq,String index){
-		
+	public List<SnsboardCategoryDTO> boardList(String universitySeq,String index, String word){
+		//System.out.println(universitySeq +":"+index +":"+word);
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("universitySeq", universitySeq);
-		map.put("index", index);
-		// TODO Auto-generated method stub
+		map.put("index", index);// ?번째 부터 ?번째 글
+		map.put("word", word);//검색어
+		
+		
 		return sql.selectList("boardList",map);
 	}
 
@@ -46,7 +51,7 @@ public class SnsboardDAO {
 		//System.out.println("글쓰기 성공 : " + writeResult); 
 		
 		boardDto = sql.selectOne("writeSeq",boardDto.getUserEmailIdFk());
-		System.out.println("글번호" + boardDto.getSnsboardSeq());
+		//System.out.println("글번호" + boardDto.getSnsboardSeq());
 		String boardSeq =  boardDto.getSnsboardSeq();
 		
 		
