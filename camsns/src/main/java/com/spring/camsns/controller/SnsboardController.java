@@ -39,77 +39,95 @@ public class SnsboardController {
 	@Autowired
 	private UniversityDAO universityDao;
 
+	//세션에서 불러드리기
 	String universitySeq = "1";
 
+	
 	String path = "D:\\";
 
 	// 메인페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpServletResponse response,String num) throws IOException {
-		if(num == null || num.equals("0")){//첫 로딩시
-		//총 게시물 수
-		int cntList = boardDao.countList(universitySeq);
+	public String main(HttpServletRequest request, HttpServletResponse response,String num,String word) throws IOException {
 		
+			//그냥 로딩 word = null    
 		
-		num = "0";
-		List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num);
-		
-		// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
-		List<UniversityDTO> universityDtoList = universityDao.list();
-		
-		request.setAttribute("cntList", cntList);
-		request.setAttribute("boardDtoList", boardDtoList);
-		request.setAttribute("universityDtoList", universityDtoList);
-		
-		
-		return "main";
-		
-		
-		
-		}else{//다음 로딩시
 			
-				
-				
-				
-				List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num);
-				//System.out.println(boardDtoList.size());
+			//총 게시물 수
+			int cntList = boardDao.countList(universitySeq,word);
+			request.setAttribute("cntList", cntList);
+			
+			
+			
+			System.out.println(cntList);
+			if(num == null && word == null){//첫 로딩시 //num 파라메터가 없다
+			
+			// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
+			//List<UniversityDTO> universityDtoList = universityDao.list();
+			//request.setAttribute("universityDtoList", universityDtoList);
+			
+			
+			num = "0"; //0부터 5개 게시글 
+			
+			//글불러옴
+			List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num,word);
 
-				JSONArray list = new JSONArray();
-	
-				for (SnsboardCategoryDTO dto : boardDtoList) {
-					JSONObject obj = new JSONObject();
-					obj.put("boardSeq", dto.getSnsboardSeq());//글번호
-					obj.put("boardSubject", dto.getSnsboardSubject());//글제목
-					obj.put("boardContent", dto.getSnsboardContent());//글내용
-					obj.put("boardRegdate", dto.getSnsboardRegdate());//글등록날짜
-					obj.put("category",dto.getCategoryType());//카테고리 타입
+			
+			
+			//List<SnsboardfileDTO> boardDtoList = boardDao.fileList()
+		/*	for(int i=0;i<boardDtoList.size();i++){
+				SnsboardfileDTO fileDto = new SnsboardfileDTO();
+				fileDto.setSnsboardSeqFk(boardDtoList.get(i).getSnsboardSeq());
+			}*/
+			
+			
+			
+			
+			request.setAttribute("boardDtoList", boardDtoList);
+			
+			
+			return "main";
+			
+			
+			
+			}else{//다음 로딩시
+				
+				if(num == null) num="0";
 					
-					list.add(obj);
+					
+					
+					List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num,word);
+					//System.out.println(boardDtoList.size());
 	
-				}
-	
-					response.setCharacterEncoding("utf-8");
-					response.getWriter().print(list);
-				
-			return null;
-			
-		}
-
-	}
-
-	// 글 더불러오기
-	@RequestMapping(value = "/moreView.action", method = RequestMethod.GET)
-	public void moreView(HttpServletRequest request, HttpServletResponse response, String index) throws Exception {
-
+					JSONArray list = new JSONArray();
 		
+					for (SnsboardCategoryDTO dto : boardDtoList) {
+						JSONObject obj = new JSONObject();
+						obj.put("boardSeq", dto.getSnsboardSeq());//글번호
+						obj.put("boardSubject", dto.getSnsboardSubject());//글제목
+						obj.put("boardContent", dto.getSnsboardContent());//글내용
+						obj.put("boardRegdate", dto.getSnsboardRegdate());//글등록날짜
+						obj.put("category",dto.getCategoryType());//카테고리 타입
+						
+						list.add(obj);
+		
+					}
+						response.setCharacterEncoding("utf-8");
+						response.getWriter().print(list);
+					
+
+			return null;
+				
+			}//else index가있을때 
 
 	}
+
+
 
 	// 뷰페이지
 	@RequestMapping(value = "/snsboard/snsboardview.action", method = RequestMethod.GET)
 	public String boardView(HttpServletRequest request, HttpServletResponse response, String boardSeq) {
 
-		System.out.println(boardSeq);
+		//System.out.println(boardSeq);
 		SnsboardCategoryDTO boardDto = boardDao.boardOne(boardSeq);
 		request.setAttribute("boardDto", boardDto);
 
