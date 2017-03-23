@@ -18,6 +18,8 @@ public class SnsboardDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
+	
+	//글 갯수가져오기
 	public int countList(String universitySeq, String word){
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("universitySeq", universitySeq);
@@ -39,6 +41,23 @@ public class SnsboardDAO {
 		return sql.selectList("boardList",map);
 	}
 
+	
+	//파일 가져오기
+	public List<List<SnsboardfileDTO>> fileList(List<SnsboardCategoryDTO> boardDtoList) {
+
+		List<List<SnsboardfileDTO>> fileDto = new ArrayList<List<SnsboardfileDTO>>();
+		
+		//각 글 파일 담기
+		for(int i=0;i<boardDtoList.size();i++){
+			List<SnsboardfileDTO> file =sql.selectList("fileSelect",boardDtoList.get(i).getSnsboardSeq());  
+			fileDto.add(file);
+		}
+		
+		//System.out.println(fileDto.size());
+		return fileDto;
+	}
+	
+	
 
 	
 	
@@ -60,7 +79,7 @@ public class SnsboardDAO {
 		
 		for(int i=0;i<fileList.size();i++){
 			map.put("boardSeq", boardSeq);
-			String fileName = fileList.get(i).getSnsboardfileName();
+			String fileName = fileList.get(i).getSnsboardfileFileName();
 			map.put("fileName", fileName);
 			
 			
@@ -77,6 +96,9 @@ public class SnsboardDAO {
 
 		return sql.selectOne("boardOne",boardSeq);
 	}
+
+
+
 
 
 

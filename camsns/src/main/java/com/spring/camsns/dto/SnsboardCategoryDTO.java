@@ -10,31 +10,11 @@ public class SnsboardCategoryDTO {
 	private String userEmailIdFk;
 	private String categoryName;
 	private String categoryType;
-	private String snsboardfileSeq;
-	private String snsboardfileFilename;
-	private String snsboardSeqFk;
+
 	
 	
 	
-	public String getSnsboardfileFilename() {
-		return snsboardfileFilename;
-	}
-	public void setSnsboardfileFilename(String snsboardfileFilename) {
-		this.snsboardfileFilename = snsboardfileFilename;
-	}
-	public String getSnsboardfileSeq() {
-		return snsboardfileSeq;
-	}
-	public void setSnsboardfileSeq(String snsboardfileSeq) {
-		this.snsboardfileSeq = snsboardfileSeq;
-	}
-	
-	public String getSnsboardSeqFk() {
-		return snsboardSeqFk;
-	}
-	public void setSnsboardSeqFk(String snsboardSeqFk) {
-		this.snsboardSeqFk = snsboardSeqFk;
-	}
+
 	
 	public String getSnsboardSeq() {
 		return snsboardSeq;

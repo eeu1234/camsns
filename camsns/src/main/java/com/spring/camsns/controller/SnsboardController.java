@@ -63,15 +63,26 @@ public class SnsboardController {
 			
 			// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
 			List<UniversityDTO> universityDtoList = universityDao.list();
+			request.setAttribute("universityDtoList", universityDtoList);
 			
 			
 			num = "0"; //0부터 5개 게시글 
 			
+			//글불러옴
 			List<SnsboardCategoryDTO> boardDtoList = boardDao.boardList(universitySeq,num,word);
+
+			
+			
+			List<List<SnsboardfileDTO>> fileDtoList = boardDao.fileList(boardDtoList);
+			System.out.println(fileDtoList.toString());
+			for(int i=0;i<boardDtoList.size();i++){
+					//System.out.println(fileDtoList.get(i).get(i).);
+			}
+			
+			
 			
 			
 			request.setAttribute("boardDtoList", boardDtoList);
-			request.setAttribute("universityDtoList", universityDtoList);
 			
 			
 			return "main";
@@ -160,7 +171,7 @@ public class SnsboardController {
 			
 			try {
 				mfile.transferTo(file);//파일 업로드 실행
-				fileDto.setSnsboardfileName(temp);
+				fileDto.setSnsboardfileFileName(temp);
 				fileList.add(fileDto);
 				
 				

@@ -7,11 +7,11 @@
    
 	<!-- 글 로딩 -->
    <select id ="boardList" resultType="com.spring.camsns.dto.SnsboardCategoryDTO" parameterType="map">
-   		SELECT A.* FROM (SELECT A.*,B.* FROM (SELECT A.*, B.* FROM 
-		(SELECT B.UNIVERSITY_SEQ AS universitySeq, B.UNIVERSITY_NAME AS universityName,A.USER_EMAIL_ID AS userEmailId, A.USER_REGDATE AS userRegDate, A.USER_LEVEL AS userLevel, A.UNIVERSITY_SEQ_FK AS universitySeqFk FROM USER A INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ_FK = B.UNIVERSITY_SEQ) A INNER JOIN
-		(SELECT B.CATEGORY_NAME AS categoryName, B.CATEGORY_TYPE AS categoryType, A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , A.CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD A INNER JOIN CATEGORY B ON A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ) B ON
-		A.userEmailId = B.userEmailIdFk) A LEFT OUTER JOIN SNSBOARDFILE B ON A.snsboardSeq = B.SNSBOARD_SEQ_FK) A 
-		WHERE (universitySeq = #{universitySeq} AND snsboardStat ='show')
+   		SELECT A.* FROM (SELECT A.*, B.* FROM 
+      (SELECT B.UNIVERSITY_SEQ AS universitySeq, B.UNIVERSITY_NAME AS universityName,A.USER_EMAIL_ID AS userEmailId, A.USER_REGDATE AS userRegDate, A.USER_LEVEL AS userLevel, A.UNIVERSITY_SEQ_FK AS universitySeqFk FROM USER A INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ_FK = B.UNIVERSITY_SEQ) A INNER JOIN
+      (SELECT B.CATEGORY_NAME AS categoryName, B.CATEGORY_TYPE AS categoryType, A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , A.CATEGORY_SEQ_FK AS categorySeqFk FROM SNSBOARD A INNER JOIN CATEGORY B ON A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ) B ON
+      A.userEmailId = B.userEmailIdFk) A
+      WHERE (universitySeq = #{universitySeq} AND snsboardStat ='show')
 		
 		<if test="word != null">
 		AND (snsboardSubject like CONCAT('%',#{word},'%') OR snsboardContent like CONCAT('%',#{word},'%'))
@@ -21,9 +21,34 @@
 		 
     </select>
 
+	<!-- 글 번호 1개일 때 1글 만 가져옴 -->
    <select id ="boardOne" resultType="com.spring.camsns.dto.SnsboardCategoryDTO" parameterType="String">
     SELECT A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , B.CATEGORY_NAME AS categoryName,B.CATEGORY_TYPE AS categoryType FROM SNSBOARD A INNER JOIN CATEGORY B WHERE A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ  AND  A.SNSBOARD_SEQ= #{boardSeq}
     </select>
+   
+   
+   
+	<!-- 각 글 파일 가져옴 -->
+   <select id ="fileSelect" resultType="com.spring.camsns.dto.SnsboardfileDTO" parameterType="String">
+    SELECT SNSBOARDFILE_SEQ AS snsboardfileSeq, SNSBOARDFILE_FILENAME AS snsboardfileFileName, SNSBOARD_SEQ_FK AS snsboardSeqFk FROM SNSBOARDFILE WHERE SNSBOARD_SEQ_FK= #{boardSeq}
+    </select>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    <!-- 글 갯수  -->
