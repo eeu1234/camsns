@@ -58,7 +58,7 @@ public class SnsboardController {
 			
 			
 			
-			System.out.println(cntList);
+			//System.out.println("글갯수" + cntList);
 			if(num == null && word == null){//첫 로딩시 //num 파라메터가 없다
 			
 			// 메인페이지라 요청 시 top에 학교리스트도 불러온다.
@@ -74,11 +74,16 @@ public class SnsboardController {
 			
 			
 			List<List<SnsboardfileDTO>> fileDtoList = boardDao.fileList(boardDtoList);
-			System.out.println(fileDtoList.toString());
-			for(int i=0;i<boardDtoList.size();i++){
-					//System.out.println(fileDtoList.get(i).get(i).);
-			}
+			//System.out.println(fileDtoList.toString());
 			
+			System.out.println("글 갯수 : "  +boardDtoList.size());
+			System.out.println("글 갯수 : "  +fileDtoList.size());
+			
+					for(int i=0;i<boardDtoList.size();i++){
+						for(int j=0;j<fileDtoList.get(i).size();j++){
+					System.out.println(fileDtoList.get(i).get(j).getSnsboardfileFileName());
+				}
+			}			
 			
 			
 			

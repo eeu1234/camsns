@@ -49,7 +49,7 @@ public class SnsboardDAO {
 		
 		//각 글 파일 담기
 		for(int i=0;i<boardDtoList.size();i++){
-			List<SnsboardfileDTO> file =sql.selectList("fileSelect",boardDtoList.get(i).getSnsboardSeq());  
+			List<SnsboardfileDTO> file = sql.selectList("fileSelect",boardDtoList.get(i).getSnsboardSeq());  
 			fileDto.add(file);
 		}
 		
