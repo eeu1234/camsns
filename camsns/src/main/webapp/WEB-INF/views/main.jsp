@@ -317,28 +317,13 @@ img {
 	    });
 
 
+		share();//버튼인식
 		
-		
 
 
 
 
-		/* 카카오톡 글 url 보내기 */
-		$(".shareBtn")
-				.click(
-						function() {
-							var name = $(this).attr('name');
-							
-							var boardSeq = $(this).val();
-//							var hostUrl = "http://127.0.0.1:8090";
-							var hostUrl = "http://eeu1234.iptime.org:8090";
-							var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
-							var url = hostUrl +shareUrl
-							
-							//함수실행
-							sendLink(url,name);
-							
-						})
+	
 
 				
 		/* 스크롤시 글 더불러오기 */		
@@ -346,7 +331,7 @@ img {
 		
 				
 				function() {
-				
+					share();//버튼인식
 					if ($(window).scrollTop() == ($(document).height() - $(window).height()) && flag == true && alertFlag == false) {
 						$("#loading").hide();
 						alert("마지막 글입니다.");
@@ -355,7 +340,7 @@ img {
 					}
 
 				
-					if ($(window).scrollTop() >= ($(document).height() - $(window).height())) {
+					if ($(window).scrollTop() == ($(document).height() - $(window).height())) {
 						
 						
 						if(flag == false){
@@ -374,7 +359,8 @@ img {
 									
 									if (result.length != 0) {
 										$.each(result, function(intValue, currentElement) {
-											
+											alert(index);
+
 												//	console.log(key);
 												//console.log(value);
 												//categoryType,boardSeq,boardCotent,boardRegdate,boardSubject
@@ -397,8 +383,14 @@ img {
 												html += '<div class="content">';
 												html += '<div class="contentRegdate">'+currentElement.boardRegdate+' </div>';
 												html += '<div class="contentPic">';
-												html += '	<!-- <img src="./images/ad1.JPG" /> -->';
-												html += '												</div>';
+												
+												
+												 $.each(currentElement.fileList, function(key, file) {
+													html += '	<img src="./images/board/'+file.fileName+'" /> ';
+												
+												}); 
+												
+												html += '</div>';
 												html += currentElement.boardContent;
 												html += '</div>';
 												html += '<div class="comment">';
@@ -454,7 +446,26 @@ img {
 
 	})//onload
 	
+	function share(){
+		/* 카카오톡 글 url 보내기 */
+		$(".shareBtn")
+				.click(
+						function() {
+							var name = $(this).attr('name');
+							
+							var boardSeq = $(this).val();
+							var hostUrl = "http://127.0.0.1:8090";
+//							var hostUrl = "http://eeu1234.iptime.org:8090";
+							var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
+							var url = hostUrl +shareUrl
+							
+							//함수실행
+							sendLink(url,name);
+							
+						})
+	}
 	
+	//검색
 	function search(word){
 		$.ajax({
 			type : "GET",
@@ -489,9 +500,23 @@ img {
 							html += '</div>';
 							html += '<div class="content">';
 							html += '<div class="contentRegdate">'+currentElement.boardRegdate+' </div>';
+					
+
+						 
 							html += '<div class="contentPic">';
-							html += '	<!-- <img src="./images/ad1.JPG" /> -->';
-							html += '												</div>';
+							
+							
+							 $.each(currentElement.fileList, function(key, file) {
+									html += '	<img src="./images/board/'+file.fileName+'" /> ';
+								
+								}); 
+							
+							
+							
+							
+							html += '</div>';
+						
+							
 							html += currentElement.boardContent;
 							html += '</div>';
 							html += '<div class="comment">';
@@ -510,9 +535,6 @@ img {
 							
 	
 							$("#contentArea").append(html);
-						
-							 
-						
 						
 
 					});
@@ -559,11 +581,8 @@ img {
 					<div class="contentNum">#${boardDtoList.snsboardSeq}</div>
 					<div class="title">${boardDtoList.snsboardSubject}</div>
 
-					<div class="shareArea">
-						<button value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}"
-							class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryType}">
-
-						</button>
+						<div class="shareArea">
+						<button value="${boardDtoList.snsboardSeq}" name="${boardDtoList.snsboardSeq}"	class="shareBtn glyphicon glyphicon-share-alt ${boardDtoList.categoryType}"></button>
 					</div>
 
 					<div class="clear"></div>
@@ -574,8 +593,11 @@ img {
 					<div class="contentRegdate">${boardDtoList.snsboardRegdate}</div>
 					<div class="contentPic">
 
-
-						<img src="./images/ad1.JPG" /> 
+						<c:forEach items="${boardDtoList.filelist}" var="filedto">
+							 <c:if test="${filedto.snsboardfileFileName != null}"> 
+								<img src="./images/board/${filedto.snsboardfileFileName}" />
+							 </c:if>  
+					 </c:forEach> 
 					</div>
 
 					${boardDtoList.snsboardContent}
@@ -624,8 +646,8 @@ img {
         label: '#'+name+'번째 이야기', // 공유할 메세지의 제목을 설정
 				 image: {
         src: 'http://mud-kage.kakao.co.kr/14/dn/btqfJfuXWcY/P7iGH1pyo5w9X1pp8lf9Pk/o.jpg',
-        width: '50',
-        height: '50'
+        width: '150',
+        height: '150'
       } // 이건 썸네일을 설정 하는 겁니다.
 				,
       webButton: {
