@@ -18,24 +18,51 @@ public class SnsboardDAO {
 	@Autowired
 	SqlSessionTemplate sql;
 	
-	//초기 로딩
-	public List<SnsboardCategoryDTO> boardList(String universitySeq){
-		
-		return sql.selectList("boardList",universitySeq);
-	}
-
-	//
-	public List<SnsboardCategoryDTO> moreView(String universitySeq,String index) {
+	
+	//글 갯수가져오기
+	public int countList(String universitySeq, String word){
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("universitySeq", universitySeq);
-		map.put("index", index);
-		// TODO Auto-generated method stub
-		return sql.selectList("moreView",map);
-	} 
+		map.put("word", word);// ?번째 부터 ?번째 글
+		//System.out.println("행 갯수  :"+sql.selectOne("countList",map));
+		return sql.selectOne("countList",map);
+	}
+	
+	
+	//글 로딩
+	public List<SnsboardCategoryDTO> boardList(String universitySeq,String index, String word){
+		//System.out.println(universitySeq +":"+index +":"+word);
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("universitySeq", universitySeq);
+		map.put("index", index);// ?번째 부터 ?번째 글
+		map.put("word", word);//검색어
+		
+		
+		return sql.selectList("boardList",map);
+	}
+
+	
+	//파일 가져오기
+	public List<List<SnsboardfileDTO>> fileList(List<SnsboardCategoryDTO> boardDtoList) {
+
+		List<List<SnsboardfileDTO>> fileDto = new ArrayList<List<SnsboardfileDTO>>();
+		
+		//각 글 파일 담기
+		for(int i=0;i<boardDtoList.size();i++){
+			List<SnsboardfileDTO> file =sql.selectList("fileSelect",boardDtoList.get(i).getSnsboardSeq());  
+			fileDto.add(file);
+		}
+		
+		//System.out.println(fileDto.size());
+		return fileDto;
+	}
+	
+	
+
 	
 	
 	
-	
+	//글 쓰기
 	public int writeBoard(SnsboardDTO boardDto, ArrayList<SnsboardfileDTO> fileList) {
 		int result=0;
 		
@@ -43,7 +70,7 @@ public class SnsboardDAO {
 		//System.out.println("글쓰기 성공 : " + writeResult); 
 		
 		boardDto = sql.selectOne("writeSeq",boardDto.getUserEmailIdFk());
-		System.out.println("글번호" + boardDto.getSnsboardSeq());
+		//System.out.println("글번호" + boardDto.getSnsboardSeq());
 		String boardSeq =  boardDto.getSnsboardSeq();
 		
 		
@@ -52,7 +79,7 @@ public class SnsboardDAO {
 		
 		for(int i=0;i<fileList.size();i++){
 			map.put("boardSeq", boardSeq);
-			String fileName = fileList.get(i).getSnsboardfileName();
+			String fileName = fileList.get(i).getSnsboardfileFileName();
 			map.put("fileName", fileName);
 			
 			
@@ -69,6 +96,9 @@ public class SnsboardDAO {
 
 		return sql.selectOne("boardOne",boardSeq);
 	}
+
+
+
 
 
 

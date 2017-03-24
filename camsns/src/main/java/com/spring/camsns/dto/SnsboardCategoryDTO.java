@@ -10,7 +10,11 @@ public class SnsboardCategoryDTO {
 	private String userEmailIdFk;
 	private String categoryName;
 	private String categoryType;
+
 	
+	
+	
+
 	
 	public String getSnsboardSeq() {
 		return snsboardSeq;

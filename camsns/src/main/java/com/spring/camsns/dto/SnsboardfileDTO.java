@@ -2,7 +2,7 @@ package com.spring.camsns.dto;
 
 public class SnsboardfileDTO {
 	private String snsboardfileSeq;
-	private String snsboardfileName;
+	private String snsboardfileFileName;
 	private String snsboardSeqFk;
 	public String getSnsboardfileSeq() {
 		return snsboardfileSeq;
@@ -10,11 +10,12 @@ public class SnsboardfileDTO {
 	public void setSnsboardfileSeq(String snsboardfileSeq) {
 		this.snsboardfileSeq = snsboardfileSeq;
 	}
-	public String getSnsboardfileName() {
-		return snsboardfileName;
+
+	public String getSnsboardfileFileName() {
+		return snsboardfileFileName;
 	}
-	public void setSnsboardfileName(String snsboardfileName) {
-		this.snsboardfileName = snsboardfileName;
+	public void setSnsboardfileFileName(String snsboardfileFileName) {
+		this.snsboardfileFileName = snsboardfileFileName;
 	}
 	public String getSnsboardSeqFk() {
 		return snsboardSeqFk;

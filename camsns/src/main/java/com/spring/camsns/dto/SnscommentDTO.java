@@ -1,15 +1,15 @@
 package com.spring.camsns.dto;
 
 public class SnscommentDTO {
-	String snscommentSeq;
-	String snscommentContent;
-	String snscommentRegdate;
-	String snscommentBlind;
-	String snscommentThread;
-	String snscommentDepth;
-	String snscommentFilename;
-	String userEmailIdFk;
-	String snsboardSeqFk;
+	private String snscommentSeq;
+	private String snscommentContent;
+	private String snscommentRegdate;
+	private String snscommentBlind;
+	private String snscommentThread;
+	private String snscommentDepth;
+	private String snscommentFilename;
+	private String userEmailIdFk;
+	private String snsboardSeqFk;
 	
 	public String getSnscommentSeq() {
 		return snscommentSeq;

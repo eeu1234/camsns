@@ -297,7 +297,6 @@ img {
 </style>
 <script>
 	$(function() {
-	
 		
 		
 		
@@ -321,7 +320,41 @@ img {
 			$('#chk').prop('checked', true);
 
 		})
-	})
+	});
+	
+
+	//comment 버튼을 누르면 실행됨
+	function commentList(boardSeq){
+		$.ajax({
+			type: "GET",
+			url: "/snsboard/listComment.action",
+			data: "boardSeq="+boardSeq,
+			dataType: "json",	
+			success: function(data){
+
+
+				var temp="";
+	
+				$(data).each(function(index,dto){
+					
+					temp+=JSON.stringify(dto)+"<br>";
+	
+					
+				});
+
+				$("#commentList"+boardSeq).html(temp);
+				console.log(temp);
+			},
+			error: function(){
+				alert("실패");
+
+			}
+			
+		});
+	}
+
+
+	
 </script>
 </head>
 <body>
@@ -333,6 +366,8 @@ img {
 			class="btn btn-primary">글쓰기</a> <input type="text" id="searchBox"
 			class="form-control" placeholder="검색">
 	</div>
+	
+	
 	<div id="container">
 		<!-- 공지사항 -->
 
@@ -343,7 +378,7 @@ img {
 
 		<!-- 본문 글 쿼리 -->
 
-
+	<form>
 		<div class="contentArea">
 
 			<!-- 머리부분 -->
@@ -373,7 +408,7 @@ img {
 
 			</div>
 
-			<div class="comment">
+			<div id="comment">
 				<div class="addComment">
 					<input type="text" class="commentText form-control" />
 					<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->
@@ -384,36 +419,19 @@ img {
 					</div>
 
 				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user commProfile"></div>
-					<div class="commTxt">안녕</div>
-					<div class="commDate">2017-03-15 12:00:25</div>
-
-
+				
+				<div id="commentList${boardDto.snsboardSeq}">
 
 				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕 나느 방그루 까꿍
+				
 
-				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕하세요 댓글2입니다.
-
-				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕
-
-				</div>
-
-				<button class="showComment" id="showBtn1">댓글 28개</button>
+				<button class="showComment" id="showBtn${boardDto.snsboardSeq}" onclick="commentList(${boardDto.snsboardSeq});">댓글</button>
+				
 			</div>
 
 		</div>
-
-
+		
+	</form>
 
 	</div>
 

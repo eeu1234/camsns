@@ -17,7 +17,7 @@
 
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">메인으로</a></li>
+					<li class="active"><a href="/camsns/main.action">메인으로</a></li>
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">

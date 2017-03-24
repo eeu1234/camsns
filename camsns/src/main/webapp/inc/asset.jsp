@@ -25,3 +25,5 @@
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- import 끝 -->
+<!-- 카카오톡 링크 api -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
