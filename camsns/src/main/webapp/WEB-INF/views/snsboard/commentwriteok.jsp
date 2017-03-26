@@ -16,12 +16,12 @@
 
 $(document).ready(function(){
 
-	<c:if test="${result>0}">
+	<c:if test="${cResult>0}">
 	alert("글쓰기 성공!!");
-	location.href ="/camsns/main.action";
+	location.href ="/camsns/snsboard/snsboardview.action?boardSeq=${boardSeq}";
 	</c:if>
 
-	<c:if test="${result==0}">
+	<c:if test="${cResult==0}">
 	alert("글쓰기 실패!!");
 	history.back();
 	</c:if>

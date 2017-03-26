@@ -1,0 +1,189 @@
+body {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	max-width: 600px;
+	 overflow: auto; 
+	 -webkit-overflow-scrolling: touch;
+}
+
+#subMenu {
+	width: 90%;
+	height: 50px;
+	margin: 0 auto;
+}
+
+#newBoardBtn {
+	width: 20%;
+}
+
+#searchBox {
+	float: right;
+	width: 50%;
+	text-align: right;
+}
+
+#container {
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+}
+
+
+.backBlue {
+	background-color: #337AB7;
+	border-color: #337AB7;
+}
+
+.backRed {
+	background-color: #D9534F;
+	border-color: #D9534F;
+}
+
+.backYellow {
+	background-color: #F0AD4E;
+	border-color: #F0AD4E;
+}
+
+.backGreen {
+	background-color: #5CB85C;
+	border-color: #5CB85C;
+}
+
+.backSkyBlue {
+	background-color: #5BC0DE;
+	border-color: #5BC0DE;
+}
+
+
+
+.blind {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	text-align: right;
+	width: 100%;
+}
+
+#contentArea {
+
+	position: relative;
+	width: 90%;
+	height: auto;
+	min-height: 300px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	background-color: white;
+	text-align:center;
+}
+.area{
+	background-color: #D5D5D5;
+	position: relative;
+	margin-bottom:20px;
+}
+
+.contentHeader {
+	position: relative;
+	width: 100%;
+	height: 35px;
+	color: white;
+	border-radius: 4px;
+	
+}
+
+.contentNum {
+	float: left;
+	position: relative;
+	width: 20%;
+	height: 35px;
+	text-align: center;
+	padding-top: 8px;
+	margin: 0;
+}
+
+.title {
+	float: left;
+	position: relative;
+	width: 67%;
+	height: 35px;
+	padding-top: 8px;
+	margin: 0;
+	font-weight: bold;
+}
+
+.shareArea {
+	float: left;
+	position: relative;
+	width: 13%;
+	height: 35px;
+}
+
+.shareBtn {
+	width: 90%;
+	height: 90%;
+	color: white;
+	border: 0px;
+}
+
+.content {
+	position: relative;
+	width: 100%;
+	height: auto;
+	min-height: 200px;
+	background-color: white;
+	padding: 8px;
+	box-shadow: 0px 7px 10px 0 silver inset;
+}
+
+.contentPic {
+	position: relative;
+	margin: 10px auto;
+	width: 95%;
+	height: auto;
+}
+
+.contentRegdate {
+	position: relative;
+	margin: 0px auto;
+	width: 100%;
+	height: auto;
+	text-align: right;
+	font-size: 0.7em;
+	color: #888;
+}
+
+
+.showComment {
+	position: relative;
+	width: 100%;
+	margin-top: 5px;
+	padding: 5px;
+	border: 0px;
+	text-align: right;
+	color: #888;
+	padding: 5px;
+}
+
+.showComment:hover {
+	position: relative;
+	width: 100%;
+	margin-top: 5px;
+	padding: 5px;
+	border: 0px;
+	text-align: right;
+	text-decoration: underline;
+	color: #888;
+	padding: 5px;
+}
+
+.clear {
+	both: clear;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}

@@ -1,5 +1,7 @@
 package com.spring.camsns.dto;
 
+import java.util.List;
+
 public class SnsboardCategoryDTO {
 	private String snsboardSeq;
 	private String snsboardSubject;
@@ -10,12 +12,19 @@ public class SnsboardCategoryDTO {
 	private String userEmailIdFk;
 	private String categoryName;
 	private String categoryType;
+	private List<SnsboardfileDTO> filelist;
 
 	
 	
 	
 
 	
+	public List<SnsboardfileDTO> getFilelist() {
+		return filelist;
+	}
+	public void setFilelist(List<SnsboardfileDTO> filelist) {
+		this.filelist = filelist;
+	}
 	public String getSnsboardSeq() {
 		return snsboardSeq;
 	}

@@ -21,9 +21,34 @@
 		 
     </select>
 
+	<!-- 글 번호 1개일 때 1글 만 가져옴 -->
    <select id ="boardOne" resultType="com.spring.camsns.dto.SnsboardCategoryDTO" parameterType="String">
     SELECT A.SNSBOARD_SEQ AS snsboardSeq, A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_CONTENT AS snsboardContent, A.SNSBOARD_REGDATE AS snsboardRegdate, A.SNSBOARD_BLIND AS snsboardBlind, A.SNSBOARD_STAT AS snsboardStat, A.USER_EMAIL_ID_FK AS userEmailIdFk , B.CATEGORY_NAME AS categoryName,B.CATEGORY_TYPE AS categoryType FROM SNSBOARD A INNER JOIN CATEGORY B WHERE A.CATEGORY_SEQ_FK = B.CATEGORY_SEQ  AND  A.SNSBOARD_SEQ= #{boardSeq}
     </select>
+   
+   
+   
+	<!-- 각 글 파일 가져옴 -->
+   <select id ="fileSelect" resultType="com.spring.camsns.dto.SnsboardfileDTO" parameterType="String">
+    SELECT SNSBOARDFILE_SEQ AS snsboardfileSeq, SNSBOARDFILE_FILENAME AS snsboardfileFileName, SNSBOARD_SEQ_FK AS snsboardSeqFk FROM SNSBOARDFILE WHERE SNSBOARD_SEQ_FK= #{boardSeq}
+    </select>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    <!-- 글 갯수  -->
@@ -62,12 +87,42 @@
 	
 	
    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<!-- 댓글 추가 -->
+	<insert id="cAdd" parameterType="com.spring.camsns.dto.SnscommentDTO">
+		INSERT INTO SNSCOMMENT (SNSCOMMENT_CONTENT, USER_EMAIL_ID_FK, SNSBOARD_SEQ_FK,SNSCOMMENT_FILENAME) VALUES (#{snscommentContent}, #{userEmailIdFk}, #{snsboardSeqFk}, #{snscommentFilename})
+	</insert>
+   
+   	<!-- 댓글 리스트 -->
+   	<select id="cList" parameterType="String" resultType ="com.spring.camsns.dto.SnscommentDTO">
+   		SELECT C.SNSCOMMENT_SEQ AS snscommentSeq, C.SNSCOMMENT_CONTENT AS snscommentContent, C.SNSCOMMENT_REGDATE AS snscommentRegdate, C.SNSCOMMENT_BLIND AS snscommentBlind, C.SNSCOMMENT_THREAD AS snscommentThread, C.SNSCOMMENT_DEPTH AS snscommentDepth, C.SNSCOMMENT_FILENAME AS snscommentFilename, C.USER_EMAIL_ID_FK AS userEmailIdFk, C.SNSBOARD_SEQ_FK AS snsboardSeqFk FROM SNSCOMMENT AS C WHERE C.SNSBOARD_SEQ_FK = #{boardSeq}
+   	</select>
+   	
+   	<!-- 댓글 삭제 -->
+   	<delete id="cDel" parameterType="String">
+   		DELETE FROM SNSCOMMENT WHERE SNSCOMMENT_SEQ = ${snscommentSeq}
+   	</delete>
+   	
 </mapper>
-
-
-
-
-
 
 
 

@@ -7,17 +7,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 각종 임포트 -->
 <%@include file="/inc/asset.jsp"%>
-
+<!-- <link rel="stylesheet" type="text/css" href="./css/boardview.css" />
+<script type="text/javascript" src="./js/boardview.js"></script> -->
 <title>Sns</title>
 
 
 
 <style>
-body {
+
+html,body {
 	position: relative;
 	margin: 0 auto;
 	width: 100%;
-	height: 100%;
+	height:100%;
 	max-width: 600px;
 }
 
@@ -27,15 +29,7 @@ body {
 	margin: 0 auto;
 }
 
-#newBoardBtn {
-	width: 20%;
-}
 
-#searchBox {
-	float: right;
-	width: 50%;
-	text-align: right;
-}
 
 #container {
 	position: relative;
@@ -44,16 +38,7 @@ body {
 	height: 100%;
 }
 
-.adminArea {
-	position: relative;
-	color: white;
-	width: 90%;
-	height: 100px;
-	margin: 0 auto;
-	border: 5px solid #F06161;
-	border-radius: 10px 10px 0 0;
-	color: white;
-}
+
 
 .backBlue {
 	background-color: #337AB7;
@@ -80,34 +65,16 @@ body {
 	border-color: #5BC0DE;
 }
 
-.permission {
-	float: left;
-	width: 20%;
-}
 
-.chkView {
-	float: left;
-	width: 80%;
-	text-align: right;
-}
 
-.blind {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 100%;
-	text-align: right;
-	width: 100%;
-}
+
 
 .contentArea {
 	position: relative;
 	width: 90%;
-	height: auto;
-	min-height: 300px;
+	height:auto;
 	background-color: #D5D5D5;
 	margin: 0 auto;
-	margin-bottom: 10px;
 }
 
 .contentHeader {
@@ -155,7 +122,7 @@ body {
 .content {
 	position: relative;
 	width: 100%;
-	height: auto;
+	height: 20%;
 	min-height: 200px;
 	background-color: white;
 	padding: 8px;
@@ -183,37 +150,18 @@ body {
 	position: relative;
 	padding: 7px;
 	width: 100%;
-	height: auto;
+	height: 5%;
 	min-height: 60px;
 	font-size: 0.8em;
+	border-bottom:2px solid  #bfbfbf;
 }
 
-.showComment {
-	position: relative;
-	width: 100%;
-	margin-top: 5px;
-	padding: 5px;
-	border: 0px;
-	text-align: right;
-	color: #888;
-	padding: 5px;
-}
 
-.showComment:hover {
-	position: relative;
-	width: 100%;
-	margin-top: 5px;
-	padding: 5px;
-	border: 0px;
-	text-align: right;
-	text-decoration: underline;
-	color: #888;
-	padding: 5px;
-}
 
 .addComment {
 	width: 100%;
 	height: 30px;
+	margin-bottom:10px;
 }
 
 .commentText {
@@ -222,35 +170,8 @@ body {
 	height: 30px;
 }
 
-.commProfile {
-	float: left;
-	width: 15%;
-}
 
-.commTxt {
-	float: left;
-	width: 65%;
-}
-
-.commDate {
-	float: left;
-	width: 20%;
-	font-size: 2px;
-	text-align: right;
-	color: #888;
-}
-
-.commentList {
-	position: relative;
-	width: 100%;
-	height: 30px;
-	font-size: 0.9em;
-	margin-top: 20px;
-	padding-left: 10px;
-	color: black;
-}
-
-.picUpBtn {
+#picUpBtn {
 	position: relative;
 	float: left;
 	width: 10%;
@@ -268,7 +189,7 @@ img {
 	height: auto;
 }
 
-.picUpBtn label {
+#picUpBtn label {
 	width: 100%;
 	height: 100%;
 	display: inline-block;
@@ -284,7 +205,7 @@ img {
 	border-radius: .25em;
 }
 
-.picUpBtn input[type="file"] { /* 파일 필드 숨기기 */
+#picUpBtn input[type="file"] { /* 파일 필드 숨기기 */
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -294,34 +215,91 @@ img {
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
+
+
+
+
+/* 코멘트 */
+
+.commentArea{
+	position:relative;
+	width: 100%;
+	height: 100;
+	max-width: 600px;
+	margin-bottom:8%;
+	 
+}
+
+
+.commInfo{
+	position:relative;
+	float:left;
+	width:100%;
+	height:30%;
+	font-size:0.7em;
+	
+	
+}
+.userEmail{
+	float:left;
+	width:50%;
+	height:100%;
+	background-color: #dadada;
+	padding-top:2%;
+	padding-left:2%;
+	color: #3b5998;
+	
+	
+	border-left: 2px solid;
+    border-radius: 25px 0px 0px 0px;
+	
+}
+.commRegdate{
+	float:left;
+	width:50%;
+	height:100%;
+	text-align:right;
+	background-color: #dadada;
+	padding-top:2%; 
+	padding-right:2%;
+	color: #bfbfbf;
+}
+
+.commContent{
+	position:relative;
+	float:left;
+	width:100%;
+	height:100%;
+	min-height:100px;
+	
+	background-color: #f6f7f9;
+	margin:0 auto;
+	padding-left:2%;
+	padding-top:2%;
+	border-bottom:2px solid #e5e5e5;
+}
+
+.commContent img{
+	width:90%;
+	height:auto;
+
+}
+
 </style>
 <script>
 	$(function() {
-	
+		
+		document.getElementById('picUpBtn').addEventListener("click", function() {
+		    document.getElementById('snscommentFilename').click();
+		}); 
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		$(".commentList").hide();
-
-		$("#showBtn1").click(function() {
-			$(".commentList").show();
-		});
-
-		function chkVal(event) {
-			console.log(event);
-		}
-
-		$(".chkBox").change(function() {
-			$('#chk').prop('checked', true);
-
-		})
 	})
+	
+	function enterComment(seq){
+		
+		$(this).parent().parent().parent().submit();
+	}
 </script>
 </head>
 <body>
@@ -329,18 +307,11 @@ img {
 
 
 	<div id="subMenu">
-		<a href="/camsns/snsboard/writeBoard.action" id="newBoardBtn"
-			class="btn btn-primary">글쓰기</a> <input type="text" id="searchBox"
-			class="form-control" placeholder="검색">
+	<!-- 	<a href="javascript:location.href='/camsns/main.action'" id="newBoardBtn" class="glyphicon glyphicon-arrow-left"></a> --> 
+		<a href="javascript:history.back()" id="newBoardBtn" class="glyphicon glyphicon-arrow-left"></a> 
 	</div>
 	<div id="container">
 		<!-- 공지사항 -->
-
-
-
-
-
-
 		<!-- 본문 글 쿼리 -->
 
 
@@ -374,49 +345,81 @@ img {
 			</div>
 
 			<div class="comment">
-				<div class="addComment">
-					<input type="text" class="commentText form-control" />
-					<!-- <button class="glyphicon glyphicon-camera picUpBtn"></button> -->
+							<div class="addComment">
+							<form  action="/camsns/snsboard/addComment.action" method="POST"  enctype="multipart/form-data">
+						
+								<input type="hidden" value="${boardDto.snsboardSeq}" name="snsboardSeqFk">
+								<input type="text" class="commentText form-control" id="content" name="snscommentContent" onkeydown="javascript: if(event.keyCode==13 ){alert(${boardDto.snsboardSeq}); enterComment(${boardDto.snsboardSeq});} "/>
+	
+		
+								<div id="picUpBtn">
+									<label for="ex_file" class="glyphicon glyphicon-camera">
+									</label> <input type="file" id="snscommentFilename" name="snscommentFilename">
+								</div>
+							</form>
+						</div>
+			
+						
 
-					<div class="picUpBtn">
-						<label for="ex_file" class="glyphicon glyphicon-camera"> </label>
-						<input type="file" id="ex_file">
+
+
+	
+
+		</div><!--comment  -->
+
+ 				 <c:forEach items="${clist}" var="cdto"> 
+	
+			<div class="commentArea">
+				<div class="commInfo">
+					<div class="userEmail">${cdto.userEmailIdFk}</div>
+					<div class="commRegdate">${cdto.snscommentRegdate}</div>
+					
+					<!-- <button class="commDel">X</button> 삭제버튼--> 
+					<div style="clear:both;"></div>
+				</div>
+				<div class="commContent">
+				 <c:if test="${cdto.snscommentFilename != null}"> 
+					<div style="width:100%;text-align:center;margin-bottom:10spx;">
+									<img src="../images/comment/${cdto.snscommentFilename}" />
 					</div>
-
+				 </c:if> 
+				${cdto.snscommentContent}
 				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user commProfile"></div>
-					<div class="commTxt">안녕</div>
-					<div class="commDate">2017-03-15 12:00:25</div>
-
-
-
-				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕 나느 방그루 까꿍
-
-				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕하세요 댓글2입니다.
-
-				</div>
-				<div class="commentList">
-					<div class="glyphicon glyphicon-user"></div>
-					안녕
-
-				</div>
-
-				<button class="showComment" id="showBtn1">댓글 28개</button>
 			</div>
+			
+		</c:forEach> 
 
-		</div>
-
-
-
-	</div>
+	</div><!-- 컨텐츠아리아 -->
 
 
+
+<script type="text/javascript">
+//<![CDATA[
+// 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('497e3896cc14549676d2ada05a95e0fd');
+
+
+
+
+
+
+  function sendLink(url,name) {
+  Kakao.Link.sendTalkLink({
+    label: '#'+name+'번째 이야기', // 공유할 메세지의 제목을 설정
+			 image: {
+    src: 'http://mud-kage.kakao.co.kr/14/dn/btqfJfuXWcY/P7iGH1pyo5w9X1pp8lf9Pk/o.jpg',
+    width: '150',
+    height: '150'
+  } // 이건 썸네일을 설정 하는 겁니다.
+			,
+  webButton: {
+    text: '글 보기',
+     url : url // 각각의 포스팅 본문의 링크를 거는 코드입니다. 
+  }
+  });
+}
+//]]>
+</script>
+</div><!-- 컨테이너 -->
 </body>
 </html>
