@@ -9,6 +9,10 @@ public class SnsboardDTO {
 	private String snsboardStat;
 	private String userEmailIdFk;
 	private String categorySeqFk;
+	private String universitySeq;
+	
+	//단순학교 조인이름때문에
+	private String universityName;
 
 	// 파일업로드
 	private String snsboardfileSeq;
@@ -82,6 +86,18 @@ public class SnsboardDTO {
 	}
 	
 	
+	public String getUniversitySeq() {
+		return universitySeq;
+	}
+	public void setUniversitySeq(String universitySeq) {
+		this.universitySeq = universitySeq;
+	}
+	public String getUniversityName() {
+		return universityName;
+	}
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
+	}
 	
 	
 }

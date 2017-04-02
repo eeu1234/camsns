@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminSnsboard">
+
+ <!-- 계정 가져오는 쿼리 - 검색 있음 -->
+    <select id="adminBoardList" resultType="com.spring.camsns.dto.SnsboardDTO" parameterType="com.spring.camsns.dto.SearchDTO">
+SELECT A.SNSBOARD_SEQ AS snsboardSeq , A.SNSBOARD_SUBJECT AS snsboardSubject, A.SNSBOARD_REGDATE AS snsboardRegdate, A.USER_EMAIL_ID_FK AS userEmailIdFk, A.SNSBOARD_BLIND AS snsboardBlind,A.SNSBOARD_STAT AS snsboardStat, B.UNIVERSITY_NAME AS universityName 
+	FROM SNSBOARD A
+		INNER JOIN UNIVERSITY B ON A.UNIVERSITY_SEQ = B.UNIVERSITY_SEQ
+				${whereWord}
+					ORDER BY SNSBOARD_SEQ DESC	LIMIT #{start}, 10
+    </select>
+    
+    <!-- 총 계정 수 가져오는 쿼리, 검색 때문에 대학과 inner join 함 -->
+    <select id="countBoard" resultType="Integer" parameterType="com.spring.camsns.dto.SearchDTO">
+    	SELECT COUNT(*) from SNSBOARD    				${whereWord}
+    </select>
+
+
+   
+</mapper>
+
+
+
