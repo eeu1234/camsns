@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="login">
+
+   <insert id="insertLogin" parameterType="String">
+   		INSERT INTO LOGINLOG VALUES(DEFAULT,DEFAULT,'LOGIN',#{userEmailId} )
+   </insert>
+   
+   <select id="checkId" parameterType="String" resultType="Integer">
+   		SELECT COUNT(*) FROM USER WHERE USER_EMAIL_ID = #{userEmailId}
+   </select>
+	   
+	<select id="getUser" parameterType="String" resultType="com.spring.camsns.dto.UserDTO">
+		SELECT USER_EMAIL_ID AS userEmailId,USER_LEVEL AS userLevel ,UNIVERSITY_SEQ_FK universitySeqFk  FROM USER WHERE USER_EMAIL_ID = #{userEmailId}
+	</select>
+   
+   	<select id = "getUniversity" resultType="com.spring.camsns.dto.UniversityDTO">
+   		SELECT  UNIVERSITY_SEQ AS universitySeq , UNIVERSITY_NAME AS universityName FROM UNIVERSITY
+   	</select>
+   	
+   	<update id="updateUniversity" parameterType="map">
+   		UPDATE USER SET UNIVERSITY_SEQ_FK = #{universitySeq} WHERE USER_EMAIL_ID = #{userEmailId} 
+   	</update>
+   	
+   	<select id="searchUniversity" resultType="com.spring.camsns.dto.UniversityDTO" parameterType="map">
+   		SELECT  UNIVERSITY_SEQ AS universitySeq , UNIVERSITY_NAME AS universityName FROM UNIVERSITY WHERE UNIVERSITY_NAME LIKE CONCAT('%',#{word},'%') 
+   	</select>
+   	
+   	<select id="searchUniversityString" resultType="com.spring.camsns.dto.UniversityDTO" parameterType="String">
+   		SELECT  UNIVERSITY_SEQ AS universitySeq , UNIVERSITY_NAME AS universityName FROM UNIVERSITY WHERE UNIVERSITY_NAME LIKE '%' + #{word} + '%' 
+   	</select>
+   	
+</mapper>

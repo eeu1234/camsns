@@ -1,6 +1,5 @@
 package com.spring.camsns.dto;
 
-
 public class SearchDTO {
 	//검색했는지 확인
 	private String column;

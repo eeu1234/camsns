@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminUniversity">
+	<select id="getUniversityTotal" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM UNIVERSITY ${where}
+		
+	</select>
+	<select id="getUniversityList" resultType="com.spring.camsns.dto.UniversityDTO" parameterType="String">
+		SELECT UNIVERSITY_SEQ AS universitySeq, UNIVERSITY_NAME AS universityName FROM UNIVERSITY ${where}
+	</select>
+</mapper>

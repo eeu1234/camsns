@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,19 +48,25 @@ public class SnsboardController {
 	private SnscommentDAO commDao;
 
 	// 세션에서 불러드리기
-	String universitySeq = "1";
+	//String universitySeq = "1";
 
 	String path = "";
 
 	// 메인페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpServletResponse response, String num, String word)
-			throws IOException {
+	public String main(HttpServletRequest request, HttpServletResponse response, String num,String word,String universitySeq)
+			throws IOException, ServletException {
 		// 톰캣경로설정
 		path = request.getRealPath("/images/board/");
 		System.out.println(path);
 		// 그냥 로딩 word = null
-
+		System.out.println(universitySeq);
+			if(universitySeq==null||universitySeq.equals("")){
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/selectUniversity.action?joinCheck=first");
+				request.setAttribute("joinCheck", "first");
+				dispatcher.forward(request, response);
+				return "";
+			}else{
 		// 총 게시물 수
 		int cntList = boardDao.countList(universitySeq, word);
 		request.setAttribute("cntList", cntList);
@@ -130,6 +138,7 @@ public class SnsboardController {
 		} // else index가있을때
 
 	}
+}
 
 	// 뷰페이지
 	@RequestMapping(value = "/snsboard/snsboardview.action", method = RequestMethod.GET)
