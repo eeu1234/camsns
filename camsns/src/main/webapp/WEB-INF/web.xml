@@ -47,4 +47,17 @@
 		<url-pattern>*.action</url-pattern>
 	</filter-mapping>
 
+
+
+	<!-- 자동 글쓰기 방지 -->
+	<servlet>
+		<servlet-name>CaptchaServlet</servlet-name>
+		<servlet-class>com.spring.camsns.CaptchaServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CaptchaServlet</servlet-name>
+		<url-pattern>/captcha</url-pattern>
+	</servlet-mapping>
 </web-app>

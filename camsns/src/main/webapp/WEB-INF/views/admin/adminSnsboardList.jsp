@@ -6,7 +6,7 @@
 <head>
 <meta charset=UTF-8">
 <title>Insert title here</title>
-<%@include file="/inc/asset.jsp" %>
+<%@include file="/inc/camsnsAsset.jsp" %>
 <style>
 
 	#tbl1 { width: 1440px; margin: 30px auto;}

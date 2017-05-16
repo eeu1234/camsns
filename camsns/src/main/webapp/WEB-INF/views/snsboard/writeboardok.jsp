@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 각종 임포트 -->
-<%@include file="/inc/asset.jsp"%>
+<%@include file="/inc/camsnsAsset.jsp"%>
 
 <title>Sns</title>
 
@@ -22,7 +22,14 @@ $(document).ready(function(){
 	</c:if>
 
 	<c:if test="${result==0}">
-	alert("글쓰기 실패!!");
+		
+		<c:if test="${captcha=='yes'}">
+			alert("보안문자가 다릅니다");
+		</c:if>
+		<c:if test="${captcha=='no'}">
+			alert("글쓰기 실패!!");
+		</c:if>
+	
 	history.back();
 	</c:if>
 });

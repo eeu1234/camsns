@@ -75,7 +75,7 @@
    <!-- 글 추가하기 -->
 	<insert id="writeBoard" parameterType="com.spring.camsns.dto.SnsboardDTO" >
 		
-		INSERT INTO SNSBOARD (SNSBOARD_SUBJECT, SNSBOARD_CONTENT, USER_EMAIL_ID_FK, CATEGORY_SEQ_FK) VALUES (#{snsboardSubject}, #{snsboardContent}, #{userEmailIdFk}, #{categorySeqFk});
+		INSERT INTO SNSBOARD (SNSBOARD_SUBJECT, SNSBOARD_CONTENT, USER_EMAIL_ID_FK, CATEGORY_SEQ_FK,UNIVERSITY_SEQ) VALUES (#{snsboardSubject}, #{snsboardContent}, #{userEmailIdFk}, #{categorySeqFk},#{universitySeq});
 	</insert>
 	
 	

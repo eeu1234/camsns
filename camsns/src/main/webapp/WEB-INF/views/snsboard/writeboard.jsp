@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 각종 임포트 -->
-<%@include file="/inc/asset.jsp"%>
+<%@include file="/inc/camsnsAsset.jsp"%>
 
 <title>Sns</title>
 
@@ -36,13 +36,12 @@ table tr td:nth-child(1) {
 .filebox {
 	position: relative;
 	width: 90%;
-	min-height:80px;
+	min-height: 80px;
 	margin: 0 auto;
 }
 
 .filebox label {
 	width: 100%;
-	
 	display: inline-block;
 	padding: .5em .75em;
 	text-align: center;
@@ -86,11 +85,22 @@ table tr td:nth-child(1) {
 	position: relative;
 	width: 50%;
 }
+
+#captcha{
+	position: relative;
+	margin:20px auto;
+	text-align: center;
+}
 </style>
 <script>
 	$(function() {
-
+		
 	})
+	
+	//자동가입 방지문자 refresh
+	function imgRefresh(){
+		    $("#captchaImg").attr("src", "<%=request.getContextPath() %>/captcha?id=" + Math.random());
+		}
 </script>
 
 </head>
@@ -99,29 +109,28 @@ table tr td:nth-child(1) {
 
 	<div id="container">
 		<!--제목,컨텐츠,아이디,카테고리  -->
-		<form action="/camsns/snsboard/writeBoardOk.action" method="POST"  enctype="multipart/form-data">
+		<form action="/camsns/snsboard/writeBoardOk.action" method="POST"
+			enctype="multipart/form-data">
 			<table class="table table-striped">
-				
+
 				<tr>
-					<td colspan="2">
-					
-					<select name="categoryVal" id="" class="form-control">
+					<td colspan="2"><select name="categoryVal" id=""
+						class="form-control">
 							<option value="">- 카테고리 선택 -</option>
 							<c:forEach items="${categoryDtoList}" var="categorydto">
 								<option value="${categorydto.categorySeq}">${categorydto.categoryName}</option>
 							</c:forEach>
-					</select>
-					<br>
-					</td>
+					</select> <br></td>
 				</tr>
 
 				<tr>
-					<td><input type="text" name="subject" class="form-control" placeholder="제목"/></td>
+					<td><input type="text" name="subject" class="form-control"
+						placeholder="제목" /></td>
 
 				</tr>
 
 				<tr>
-					<td colspan="2"><textarea rows="5" cols="30" name="content" 
+					<td colspan="2"><textarea rows="5" cols="30" name="content"
 							class="form-control" /></textarea></td>
 
 				</tr>
@@ -132,14 +141,31 @@ table tr td:nth-child(1) {
 
 
 			<div class="filebox bs3-success">
-				<label for="imgFileUpload">사진 업로드</label> <input type="file" id="imgFileUpload" name="imgFile">
+				<label for="imgFileUpload">사진 업로드</label> <input type="file"
+					id="imgFileUpload" name="imgFile">
 			</div>
 			<hr />
-			<div id="btnGroup">
-				<input type="button" value="취소" class="btn btn-danger" onclick="history.back();" /> <input type="submit" value="확인" class="btn btn-primary"	style="float: right;" />
+			<div id="captcha">
+				<img src="<%=request.getContextPath() %>/captcha" id="captchaImg" alt="captcha img">
+			
+			
+				<div id="typeCaptcha" style="height:50px;margin-top:10px;">
+				 <input	type="text" placeholder="보안문자를 입력하세요" name="captcha" style="width:50%;height:30px;"> 
+				 <a	onclick="imgRefresh()" id="refreshBtn" > <img src="/camsns/images/snsUtil/refreshBtn.png" style="margin-left:10px;height:30px;" /></a>
+				</div>
 				
+				 <input type="hidden" name="userId" value="" />
 			</div>
-			<input type="hidden" name="userId" value="" />
+			<hr />
+			
+			<div id="btnGroup">
+				<input type="button" value="취소" class="btn btn-danger"
+					onclick="history.back();" />
+				<input type="submit" value="확인" class="btn btn-primary" style="float: right;" />
+
+			</div>
+			
+	
 		</form>
 		<!-- 		
 <tr class="active">...</tr>

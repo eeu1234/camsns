@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 각종 임포트 -->
-<%@include file="/inc/asset.jsp"%>
+<%@include file="/inc/camsnsAsset.jsp"%>
 
 <title>Sns</title>
 

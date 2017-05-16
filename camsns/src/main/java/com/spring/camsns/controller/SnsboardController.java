@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -52,7 +53,10 @@ public class SnsboardController {
 
 	// 메인페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpServletResponse response, String num, String word)
+	public String main(HttpServletRequest request
+						,HttpSession session
+						, HttpServletResponse response
+						, String num, String word)
 			throws IOException {
 		// 톰캣경로설정
 		path = request.getRealPath("/images/board/");
@@ -133,7 +137,10 @@ public class SnsboardController {
 
 	// 뷰페이지
 	@RequestMapping(value = "/snsboard/snsboardview.action", method = RequestMethod.GET)
-	public String boardView(HttpServletRequest request, HttpServletResponse response, String boardSeq) {
+	public String boardView(HttpServletRequest request
+							,HttpSession session
+							, HttpServletResponse response
+							, String boardSeq) {
 
 		// System.out.println(boardSeq);
 		SnsboardCategoryDTO boardDto = boardDao.boardOne(boardSeq);
@@ -153,7 +160,9 @@ public class SnsboardController {
 	
 	// 글쓰기 페이지
 	@RequestMapping(value = "/snsboard/writeBoard.action", method = RequestMethod.GET)
-	public String writeBoard(HttpServletRequest request, HttpServletResponse response) {
+	public String writeBoard(HttpServletRequest request
+							,HttpSession session
+							, HttpServletResponse response) {
 
 		// 카테고리 리스트 넘겨줌
 		List<CategoryDTO> categoryDtoList = categoryDao.categoryList();
@@ -164,50 +173,68 @@ public class SnsboardController {
 
 	// 글쓰기동작 페이지
 	@RequestMapping(value = "/snsboard/writeBoardOk.action", method = RequestMethod.POST)
-	public String writeBoardOk(HttpServletRequest request, HttpServletResponse response, String categoryVal,
-			String subject, String content) {
-
-		ArrayList<SnsboardfileDTO> fileList = new ArrayList<SnsboardfileDTO>();
-		SnsboardfileDTO fileDto = new SnsboardfileDTO();
-
-		try {
-		MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
-
-		// 다중 파일 겟
-		Iterator<String> iterator = multi.getFileNames();
-
-		while (iterator.hasNext()) {
-
-			MultipartFile mfile = multi.getFile(iterator.next());
-
-			// 파일명 직접검사
-			String temp = getFileName(mfile.getOriginalFilename());
-
-				
-				
-				File file = new File(path + temp);
-				mfile.transferTo(file);// 파일 업로드 실행
-				fileDto.setSnsboardfileFileName(temp);
-				fileList.add(fileDto);
-		}
-
-			} catch (Exception e) {
-				// TODO: handle exception
+	public String writeBoardOk(HttpServletRequest request
+								,HttpSession session
+								, HttpServletResponse response
+								, String categoryVal
+								, String subject
+								, String content
+								, String captcha) {
+		
+		
+	
+		//문자가같으면
+		if(session.getAttribute("correctAnswer").equals(captcha)){
+			ArrayList<SnsboardfileDTO> fileList = new ArrayList<SnsboardfileDTO>();
+			SnsboardfileDTO fileDto = new SnsboardfileDTO();
+	
+			try {
+			MultipartHttpServletRequest multi = (MultipartHttpServletRequest) request;
+	
+			// 다중 파일 겟
+			Iterator<String> iterator = multi.getFileNames();
+	
+			while (iterator.hasNext()) {
+	
+				MultipartFile mfile = multi.getFile(iterator.next());
+	
+				// 파일명 직접검사
+				String temp = getFileName(mfile.getOriginalFilename());
+	
+					
+					
+					File file = new File(path + temp);
+					mfile.transferTo(file);// 파일 업로드 실행
+					fileDto.setSnsboardfileFileName(temp);
+					fileList.add(fileDto);
 			}
-
-
-		String userId = "eeu1234@naver.com";
-
-		SnsboardDTO boardDto = new SnsboardDTO();
-		boardDto.setCategorySeqFk(categoryVal);
-		boardDto.setSnsboardSubject(subject);
-		boardDto.setSnsboardContent(content);
-		boardDto.setUserEmailIdFk(userId);
-
-		int result = boardDao.writeBoard(boardDto, fileList);
-
-		request.setAttribute("result", result);
-
+	
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+	
+	
+			String userId = "eeu1234@naver.com";
+			System.out.println("********"+universitySeq);
+			SnsboardDTO boardDto = new SnsboardDTO();
+			boardDto.setCategorySeqFk(categoryVal);
+			boardDto.setSnsboardSubject(subject);
+			boardDto.setSnsboardContent(content);
+			boardDto.setUserEmailIdFk(userId);
+			boardDto.setUniversitySeq(universitySeq);
+	
+			int result = boardDao.writeBoard(boardDto, fileList);
+	
+			request.setAttribute("result", result);
+			request.setAttribute("captcha", "no");
+			}
+			//자동가입방지 문자 다르면
+			else{
+				System.out.println("자동가입문자다름");
+				request.setAttribute("result", 0);
+				request.setAttribute("captcha", "yes");
+			}
+			
 		return "snsboard/writeboardok";
 	}
 

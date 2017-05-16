@@ -6,9 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- 각종 임포트 -->
-<%@include file="/inc/asset.jsp"%>
-<!-- <link rel="stylesheet" type="text/css" href="./css/boardview.css" />
-<script type="text/javascript" src="./js/boardview.js"></script> -->
+<%@include file="/inc/camsnsAsset.jsp"%>
+
 <title>Sns</title>
 
 
@@ -287,6 +286,46 @@ img {
 
 </style>
 <script>
+var index = 0; //글 5개씩 넘기기 위한 변수
+var cntList = "${cntList}";// 총 글 갯수
+var flag = false;//마지막 글 이후 ajax 요청 안하기위한 flag
+var alertFlag =false;//마지막글 alert 창 1번만띄우는 flag
+
+
+$(function() {
+
+
+	share();//공유버튼인식
+	
+});
+
+
+
+
+
+
+function share(){
+	/* 카카오톡 글 url 보내기 */
+	$(".shareBtn")
+			.click(
+					function() {
+						var name = $(this).attr('name');
+						
+						var boardSeq = $(this).val();
+						var hostUrl = "http://127.0.0.1:8090";
+//						var hostUrl = "http://eeu1234.iptime.org:8090";
+						var shareUrl = "/camsns/snsboard/snsboardview.action?boardSeq="	+ boardSeq;
+						var url = hostUrl +shareUrl
+						
+						//함수실행
+						sendLink(url,name);
+						
+					})
+}
+
+
+</script>
+<script>
 	$(function() {
 		
 		document.getElementById('picUpBtn').addEventListener("click", function() {
@@ -336,7 +375,7 @@ img {
 			<div class="content">
 				<div class="contentRegdate">${boardDto.snsboardRegdate}</div>
 				<div class="contentPic">
-					<!-- <img src="./images/ad1.JPG" /> -->
+					<!-- <img src="/images/ad1.JPG" /> -->
 					<!-- 이미지있으면 띄우기 -->
 				</div>
 
@@ -380,7 +419,7 @@ img {
 				<div class="commContent">
 				 <c:if test="${cdto.snscommentFilename != null}"> 
 					<div style="width:100%;text-align:center;margin-bottom:10spx;">
-									<img src="../images/comment/${cdto.snscommentFilename}" />
+									<img src="/images/comment/${cdto.snscommentFilename}" />
 					</div>
 				 </c:if> 
 				${cdto.snscommentContent}
